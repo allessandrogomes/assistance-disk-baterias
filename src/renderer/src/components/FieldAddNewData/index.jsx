@@ -2,6 +2,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { Button, FormControl } from '@mui/material';
 import { useState } from 'react';
+import { addNewData } from '../../store/reducers/requests';
+import { useDispatch } from 'react-redux';
 
 export default function FieldAddNewData() {
 
@@ -30,6 +32,7 @@ export default function FieldAddNewData() {
 
 
     const updateFormData = (event) => {
+
         let { name, value } = event.target
 
         const numericFields = ["id", "cpf", "phoneNumber"]
@@ -42,9 +45,18 @@ export default function FieldAddNewData() {
         })
     }
 
+    const dispatch = useDispatch()
+
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(formData)
+
+        const formattedFormData = {
+            ...formData,
+            entryDate: new Date(formData.entryDate).toLocaleDateString('pt-BR'),
+            returnDate: new Date(formData.returnDate).toLocaleDateString('pt-BR')
+        };
+
+        dispatch(addNewData(formattedFormData))
     }
 
     const maxDate = new Date();
