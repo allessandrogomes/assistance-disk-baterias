@@ -22,7 +22,6 @@ export default function DataTable() {
     return (
         <div style={{ height: '70vh', width: '95vw' }}>
             <DataGrid
-            sortModel={[{ field: 'id', sort: 'desc' }]}
                 sx={{ color: '#EEEEEE', backgroundColor: '#31363F' }}
                 rows={requests}
                 columns={columns}
@@ -30,6 +29,9 @@ export default function DataTable() {
                     pagination: {
                         paginationModel: { page: 0, pageSize: 8 },
                     },
+                    sorting: {
+                        sortModel: [{ field: 'id', sort: 'desc' }]
+                    }
                 }}
                 pageSizeOptions={[5, 8]}
             />

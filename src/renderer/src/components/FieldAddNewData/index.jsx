@@ -4,6 +4,7 @@ import { Button, FormControl } from '@mui/material';
 import { useState } from 'react';
 import { addNewData } from '../../store/reducers/requests';
 import { useDispatch } from 'react-redux';
+import { format } from 'date-fns';
 
 export default function FieldAddNewData() {
 
@@ -17,7 +18,12 @@ export default function FieldAddNewData() {
         batteryModel: '',
         batteryCode: '',
         loanBatteryModel: '',
-        loanBatteryCode: ''
+        loanBatteryCode: '',
+        deadlineDays: 0,
+        numberOfDaysPassed: 0,
+        daysOfDelay: 0,
+        numberOfTimesReturned: 0,
+        status: 'EM ABERTO'
     })
 
     const formatsForNumbersOnly = (value) => {
@@ -45,6 +51,25 @@ export default function FieldAddNewData() {
         })
     }
 
+    const setsTheDeadlineDays = (entryDate, returnDate) => {
+        const entryDateInDateFormat = new Date(entryDate)
+        const returnDateInDateFormat = new Date(returnDate)
+
+        const differenceInMilliseconds = Math.abs(returnDateInDateFormat - entryDateInDateFormat)
+
+        const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24))
+
+        return differenceInDays
+    }
+
+    const formatDate = (dateString) => {
+        const [year, month, day] = dateString.split('-');
+
+        const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+
+        return format(date, 'dd/MM/yyyy');
+    }
+
     const dispatch = useDispatch()
 
     const handleSubmit = (event) => {
@@ -52,8 +77,9 @@ export default function FieldAddNewData() {
 
         const formattedFormData = {
             ...formData,
-            entryDate: new Date(formData.entryDate).toLocaleDateString('pt-BR'),
-            returnDate: new Date(formData.returnDate).toLocaleDateString('pt-BR')
+            entryDate: formatDate(formData.entryDate),
+            returnDate: formatDate(formData.returnDate),
+            deadlineDays: setsTheDeadlineDays(formData.entryDate, formData.returnDate)
         };
 
         dispatch(addNewData(formattedFormData))
