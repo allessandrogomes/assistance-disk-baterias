@@ -53,7 +53,7 @@ export default function ReturnToCustomers() {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
+                            <TableCell>N° Requisição</TableCell>
                             <TableCell>Cliente</TableCell>
                             <TableCell>Telefone</TableCell>
                             <TableCell>Data entrada</TableCell>
@@ -70,7 +70,7 @@ export default function ReturnToCustomers() {
                     </TableHead>
                     <TableBody>
                         {requests.map((request) => request.daysOfDelay > 0 ? <TableRow key={request.batteryCode}>
-                            <TableCell>{request.id}</TableCell>
+                            <TableCell>{request.request}</TableCell>
                             <TableCell>{request.clientName}</TableCell>
                             <TableCell>{request.phoneNumber}</TableCell>
                             <TableCell>{request.entryDate}</TableCell>
