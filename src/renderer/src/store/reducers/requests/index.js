@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = [
     {
-        id: 1,
+        request: 1,
         clientName: 'José',
         cpf: '24398744390',
         phoneNumber: '7499977884432',
@@ -20,14 +20,14 @@ const initialState = [
         status: 'EM ABERTO'
     },
     {
-        id: 2,
+        request: 2,
         clientName: 'Maria',
         cpf: '44426589645',
         phoneNumber: '74999632565',
         entryDate: '20/03/2024',
         returnDate: '22/03/2024',
         batteryModel: 'M60GD',
-        batteryCode: 'A3-0911',
+        batteryCode: 'A3-2964',
         loanBatteryModel: 'Z60D',
         loanBatteryCode: 'B2-8732',
         deadlineDays: 2,
@@ -43,10 +43,9 @@ const requestsSlice = createSlice({
     initialState,
     reducers: {
         addNewData: (state, { payload }) => {
-            if (state.some(item => item.id === payload.id)) {
-            } else {
-                state.push(payload);
-            }
+            const requestUpdated = [...state]
+            requestUpdated.push(payload)
+            return requestUpdated
         },
         updateData: (state, { payload }) => {
             return payload
