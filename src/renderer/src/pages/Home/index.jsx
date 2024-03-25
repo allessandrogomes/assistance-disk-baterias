@@ -22,7 +22,10 @@ function Home() {
 
   return (
     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center' }}>
-      <Button onClick={() => navigate('/retorno')}>Tela de retorno</Button>
+      <Box>
+        <Button onClick={() => navigate('/retorno')}>Retorno ao cliente</Button>
+        <Button onClick={() => navigate('/baterias-de-emprestimo')}>Baterias de empréstimo</Button>
+      </Box>
       {
         requestRegisteredSuccessfully === true ? (
           <Alert severity="success">Requisição cadastrada com sucesso.</Alert>
