@@ -69,7 +69,7 @@ export default function ReturnToCustomers() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {requests.map((request) => request.daysOfDelay > 0 ? <TableRow key={request.id}>
+                        {requests.map((request) => request.daysOfDelay > 0 ? <TableRow key={request.batteryCode}>
                             <TableCell>{request.id}</TableCell>
                             <TableCell>{request.clientName}</TableCell>
                             <TableCell>{request.phoneNumber}</TableCell>
