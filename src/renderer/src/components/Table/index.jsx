@@ -31,7 +31,7 @@ export default function DataTable() {
                         paginationModel: { page: 0, pageSize: 8 },
                     },
                     sorting: {
-                        sortModel: [{field: 'request', sort: 'desc'}]
+                        sortModel: [{ field: 'request', sort: 'desc' }]
                     }
                 }}
                 pageSizeOptions={[5, 8]}
