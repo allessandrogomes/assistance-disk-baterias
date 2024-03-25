@@ -46,7 +46,10 @@ export default function ReturnToCustomers() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <Button onClick={() => navigate('/')}>Tela Inicial</Button>
+            <Box>
+                <Button onClick={() => navigate('/')}>Início</Button>
+                <Button onClick={() => navigate('/baterias-de-emprestimo')}>Baterias de empréstimo</Button>
+            </Box>
             <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>Retorno aos clientes</Typography>
             <Button onClick={updateTable}>Atualizar<RefreshIcon /></Button>
             <TableContainer sx={{ width: "95vw" }} component={Paper}>
