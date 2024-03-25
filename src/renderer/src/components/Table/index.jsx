@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 60 },
+    { field: 'request', headerName: 'Requisição', width: 60 },
     { field: 'clientName', headerName: 'Nome do cliente', width: 200 },
     { field: 'cpf', headerName: 'CPF', width: 110 },
     { field: 'phoneNumber', headerName: 'Telefone', width: 110 },
@@ -22,6 +22,7 @@ export default function DataTable() {
     return (
         <div style={{ height: '70vh', width: '95vw' }}>
             <DataGrid
+                getRowId={(row) => row.batteryCode}
                 sx={{ color: '#EEEEEE', backgroundColor: '#31363F' }}
                 rows={requests}
                 columns={columns}
@@ -30,7 +31,7 @@ export default function DataTable() {
                         paginationModel: { page: 0, pageSize: 8 },
                     },
                     sorting: {
-                        sortModel: [{ field: 'id', sort: 'desc' }]
+                        sortModel: [{field: 'request', sort: 'desc'}]
                     }
                 }}
                 pageSizeOptions={[5, 8]}
