@@ -3,13 +3,15 @@ import Box from '@mui/material/Box';
 import { Button, FormControl } from '@mui/material';
 import { useState } from 'react';
 import { addNewData } from '../../store/reducers/requests';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 
-export default function FieldAddNewData() {
+export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
+
+    const requests = useSelector(state => state.requests)
 
     const [formData, setFormData] = useState({
-        id: '',
+        request: '',
         clientName: '',
         cpf: '',
         phoneNumber: '',
@@ -82,7 +84,12 @@ export default function FieldAddNewData() {
             deadlineDays: setsTheDeadlineDays(formData.entryDate, formData.returnDate)
         };
 
-        dispatch(addNewData(formattedFormData))
+        if (requests.some(item => item.batteryCode === formData.batteryCode)) {
+            requestRegisteredSuccessfully(false)
+        } else {
+            requestRegisteredSuccessfully(true)
+            dispatch(addNewData(formattedFormData))
+        }
     }
 
     const maxDate = new Date();
@@ -92,7 +99,7 @@ export default function FieldAddNewData() {
         <form onSubmit={handleSubmit}>
             <FormControl sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', maxWidth: '95vw', bgcolor: '#EEEEEE', p: '10px' }}>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', width: '100%' }}>
-                    <TextField onChange={updateFormData} inputProps={{ maxLength: 4 }} id="id" name="id" size="small" label="ID" value={formData.id} variant="filled" required />
+                    <TextField onChange={updateFormData} inputProps={{ maxLength: 4 }} id="request" name="request" size="small" label="N° REQUISIÇÃO" value={formData.request} variant="filled" required />
                     <TextField onChange={updateFormData} id="clientName" name="clientName" size="small" label="Nome do cliente" value={formData.clientName} variant="filled" required />
                     <TextField onChange={updateFormData} inputProps={{ maxLength: 11 }} id="cpf" name="cpf" size="small" label="CPF" value={formData.cpf} variant="filled" />
                     <TextField onChange={updateFormData} inputProps={{ maxLength: 11 }} id="phoneNumber" name="phoneNumber" size="small" label="Telefone" value={formData.phoneNumber} variant="filled" required />
