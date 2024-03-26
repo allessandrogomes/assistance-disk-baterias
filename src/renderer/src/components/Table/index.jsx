@@ -13,6 +13,7 @@ const columns = [
     { field: 'batteryCode', headerName: 'Código da bateria', width: 130 },
     { field: 'loanBatteryModel', headerName: 'Modelo bateria empréstimo', width: 190 },
     { field: 'loanBatteryCode', headerName: 'Código bateria empréstimo', width: 190 },
+    { field: 'status', headerName: 'Status', width: 100 },
 ]
 
 export default function DataTable() {
