@@ -17,7 +17,7 @@ const initialState = [
         numberOfDaysPassed: 0,
         daysOfDelay: 0,
         numberOfTimesReturned: 0,
-        status: 'EM ABERTO'
+        status: 'PENDENTE'
     },
     {
         request: 2,
@@ -34,7 +34,7 @@ const initialState = [
         numberOfDaysPassed: 0,
         daysOfDelay: 1,
         numberOfTimesReturned: 0,
-        status: 'EM ABERTO'
+        status: 'PENDENTE'
     }
 ]
 
