@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { Button, FormControl } from '@mui/material';
+import { Button, FormControl, Typography } from '@mui/material';
 import { useState } from 'react';
 import { addNewData } from '../../store/reducers/requests';
 import { useDispatch, useSelector } from 'react-redux';
@@ -97,8 +97,8 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <FormControl sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', maxWidth: '95vw', bgcolor: '#EEEEEE', p: '10px' }}>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', width: '100%' }}>
+            <Typography component="h2" variant="h6" textAlign="center">Adicionar nova requisição</Typography>
+            <FormControl sx={{ borderRadius: '10px', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', bgcolor: '#EEEEEE', p: '20px 0', width: '500px' }}>
                     <TextField
                         onChange={updateFormData}
                         inputProps={{ maxLength: 4 }}
@@ -144,6 +144,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
                     <TextField
                         onChange={updateFormData}
                         inputProps={{ max: maxDate.toISOString().split("T")[0] }}
+                        sx={{ width: '206px' }}
                         id="entryDate"
                         name="entryDate"
                         type="date"
@@ -156,6 +157,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
                     <TextField
                         onChange={updateFormData}
                         inputProps={{ max: maxDate.toISOString().split("T")[0] }}
+                        sx={{ width: '206px' }}
                         id="returnDate"
                         name="returnDate"
                         type="date"
@@ -203,8 +205,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
                         value={formData.loanBatteryCode}
                         variant="filled"
                     />
-                </Box>
-                <Button type='submit' variant="contained">Adicionar</Button>
+                    <Button type='submit' variant="contained">Adicionar</Button>
             </FormControl>
         </form>
 
