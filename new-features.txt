@@ -3,8 +3,8 @@ Status das requisições
 pendente
 finalizado
 emprestada
+permuta
 
-new feat: ao completar 31 dias na assistência, a bateria será transformada em bateria de empréstimo  e o status da sua requisição será alterado para 'finalizado'.
 
 new feat: em baterias de empréstimo deverá ter uma sugestão de baterias de requisições que estão a alguns dias em atraso.
 
@@ -13,3 +13,5 @@ new feat: caso uma bateria de uma requisição seja emprestada, o seu status dev
 new feat: deverá ter uma tela exclusiva para edição dos dados das requisições.
 
 new feat: deverá ter uma tela exclusiva para edição dos dados das baterias de empréstimo.
+
+new feat: quando for feita a permuta de baterias, a bateria de empréstimo deverá ser removida das baterias de empréstimo
