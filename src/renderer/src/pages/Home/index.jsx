@@ -1,14 +1,11 @@
-import { Alert, Box, Button } from "@mui/material"
+import { Alert, Box } from "@mui/material"
 import FieldAddNewData from "../../components/FieldAddNewData"
 import DataTable from "../../components/Table"
-import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 
 
 function Home() {
-
-  const navigate = useNavigate()
 
   const [requestRegisteredSuccessfully, setRequestRegisteredSuccessfully] = useState(undefined)
 
@@ -22,10 +19,6 @@ function Home() {
 
   return (
     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center' }}>
-      <Box>
-        <Button onClick={() => navigate('/retorno')}>Retorno ao cliente</Button>
-        <Button onClick={() => navigate('/baterias-de-emprestimo')}>Baterias de empréstimo</Button>
-      </Box>
       {
         requestRegisteredSuccessfully === true ? (
           <Alert severity="success">Requisição cadastrada com sucesso.</Alert>
