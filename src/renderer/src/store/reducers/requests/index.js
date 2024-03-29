@@ -7,12 +7,12 @@ const initialState = [
         clientName: 'José',
         cpf: '24398744390',
         phoneNumber: '7499977884432',
-        entryDate: '22/03/2024',
-        returnDate: '23/03/2024',
+        entryDate: '22/01/2024',
+        returnDate: '23/01/2024',
         batteryModel: 'M60GD',
         batteryCode: 'A3-0911',
         loanBatteryModel: 'Z60D',
-        loanBatteryCode: 'B2-8732',
+        loanBatteryCode: 'B2-8735',
         deadlineDays: 1,
         numberOfDaysPassed: 0,
         daysOfDelay: 0,
@@ -48,7 +48,8 @@ const requestsSlice = createSlice({
             return requestUpdated
         },
         updateData: (state, { payload }) => {
-            return payload
+            const newRequests = payload
+            return newRequests
         }
     }
 })
