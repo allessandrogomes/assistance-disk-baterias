@@ -27,7 +27,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
         numberOfDaysPassed: 0,
         daysOfDelay: 0,
         numberOfTimesReturned: 0,
-        status: 'EM ABERTO'
+        status: 'PENDENTE'
     })
 
     const formatsForNumbersOnly = (value) => {
