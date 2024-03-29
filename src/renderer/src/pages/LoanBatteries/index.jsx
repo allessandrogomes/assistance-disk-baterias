@@ -3,14 +3,12 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { addNewLoanBattery, updateLoanBatteries } from "../../store/reducers/loanBatteries"
-import RefreshIcon from '@mui/icons-material/Refresh';
 
 
 export default function LoanBatteries() {
 
-    const navigate = useNavigate()
-
     const dispatch = useDispatch()
+
     const loanBatteries = useSelector(state => state.loanBatteries)
     const requests = useSelector(state => state.requests)
 
@@ -22,10 +20,15 @@ export default function LoanBatteries() {
         batteryIsAvailable: true
     })
 
-    const updateTable = () => {
-        const updatedLoanBatteries = loanBatteries.map(battery => ({ ...battery }))
+    useEffect(() => {
+        updatePage()
+    }, [])
 
-        updatedLoanBatteries.forEach(battery => {
+    const updatePage = () => {
+        const loanBatteriesClone = loanBatteries.map(battery => ({ ...battery }))
+
+
+        loanBatteriesClone.forEach(battery => {
             let isBatteryLoaned = false
 
             requests.forEach(request => {
@@ -37,13 +40,11 @@ export default function LoanBatteries() {
             isBatteryLoaned ? battery.batteryIsAvailable = false : battery.batteryIsAvailable = true
         })
 
-        dispatch(updateLoanBatteries(updatedLoanBatteries))
+        dispatch(updateLoanBatteries(loanBatteriesClone))
     }
 
     const updateFormData = (event) => {
         let { name, value } = event.target
-
-
 
         setFormData({
             ...formData,
@@ -72,12 +73,7 @@ export default function LoanBatteries() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <Box>
-                <Button onClick={() => navigate('/')}>Início</Button>
-                <Button onClick={() => navigate('/retorno')}>Retorno ao cliente</Button>
-            </Box>
             <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>Baterias de empréstimo</Typography>
-            <Button onClick={updateTable}>Atualizar<RefreshIcon /></Button>
             {
                 newLoanBatteryRegisteredSucessfully === true ? (
                     <Alert severity="success">Requisição cadastrada com sucesso.</Alert>
