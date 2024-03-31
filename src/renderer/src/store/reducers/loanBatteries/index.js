@@ -5,27 +5,32 @@ const initialState = [
     {
         batteryModel: 'M60GD',
         batteryCode: 'C2-4832',
-        batteryIsAvailable: true
+        batteryIsAvailable: true,
+        origin: 'SOS'
     },
     {
         batteryModel: 'M72HD',
         batteryCode: 'D5-7291',
-        batteryIsAvailable: false
+        batteryIsAvailable: false,
+        origin: 'SOS'
     },
     {
         batteryModel: 'M45FD',
         batteryCode: 'A8-1023',
-        batteryIsAvailable: true
+        batteryIsAvailable: true,
+        origin: 'SOS'
     },
     {
         batteryModel: 'M80RD',
         batteryCode: 'F3-6217',
-        batteryIsAvailable: true
+        batteryIsAvailable: true,
+        origin: 'SOS'
     },
     {
         batteryModel: 'M55SD',
         batteryCode: 'B4-3765',
-        batteryIsAvailable: false
+        batteryIsAvailable: false,
+        origin: 'SOS'
     }
 ]
 
@@ -40,10 +45,14 @@ const loanBatteriesSlice = createSlice({
         },
         updateLoanBatteries: (state, { payload }) => {
             return payload
+        },
+        removeLoanBatteries: (state, { payload }) => {
+            const newLoanBatteries = state.filter(item => item.batteryCode !== payload.batteryCode)
+            return newLoanBatteries;
         }
     }
 })
 
-export const { addNewLoanBattery, updateLoanBatteries } = loanBatteriesSlice.actions
+export const { addNewLoanBattery, updateLoanBatteries, removeLoanBatteries } = loanBatteriesSlice.actions
 
 export default loanBatteriesSlice.reducer
