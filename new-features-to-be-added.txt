@@ -1,0 +1,10 @@
+Status das requisições
+
+pendente
+finalizado
+emprestada
+permuta
+
+new feat: criar pagina de saída/finalização das requisições 
+
+new feat: quando for feita a permuta de baterias, a bateria de empréstimo deverá ser removida das baterias de empréstimo
