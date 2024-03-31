@@ -13,8 +13,18 @@ const columns = [
     { field: 'batteryCode', headerName: 'Código da bateria', width: 130 },
     { field: 'loanBatteryModel', headerName: 'Modelo bateria empréstimo', width: 190 },
     { field: 'loanBatteryCode', headerName: 'Código bateria empréstimo', width: 190 },
+    { field: 'daysOfDelay', headerName: 'Dias de atraso', width: 120 },
     { field: 'status', headerName: 'Status', width: 100 },
 ]
+
+const initialFilters = [
+    {
+        field: 'status',
+        operator: 'isAnyOf',
+        value: ['pendente', 'emprestada']
+    }
+]
+
 
 export default function DataTable() {
 
@@ -33,6 +43,11 @@ export default function DataTable() {
                     },
                     sorting: {
                         sortModel: [{ field: 'request', sort: 'desc' }]
+                    },
+                    filter: {
+                        filterModel: {
+                            items: initialFilters
+                        }
                     }
                 }}
                 pageSizeOptions={[5, 8]}
