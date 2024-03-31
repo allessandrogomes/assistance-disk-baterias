@@ -11,13 +11,15 @@ const initialState = [
         returnDate: '23/01/2024',
         batteryModel: 'M60GD',
         batteryCode: 'A3-0911',
-        loanBatteryModel: 'Z60D',
-        loanBatteryCode: 'B2-8735',
+        loanBatteryModel: '',
+        loanBatteryCode: '',
         deadlineDays: 1,
         numberOfDaysPassed: 0,
         daysOfDelay: 0,
         numberOfTimesReturned: 0,
-        status: 'PENDENTE'
+        status: 'PENDENTE',
+        origin: 'REQUISIÇÃO',
+        itHasALoanerBattery: false,
     },
     {
         request: 2,
@@ -28,13 +30,15 @@ const initialState = [
         returnDate: '22/03/2024',
         batteryModel: 'M60GD',
         batteryCode: 'A3-2964',
-        loanBatteryModel: 'Z60D',
-        loanBatteryCode: 'B2-8732',
+        loanBatteryModel: '',
+        loanBatteryCode: '',
         deadlineDays: 2,
         numberOfDaysPassed: 0,
         daysOfDelay: 1,
         numberOfTimesReturned: 0,
-        status: 'PENDENTE'
+        status: 'PENDENTE',
+        origin: 'REQUISIÇÃO',
+        itHasALoanerBattery: false,
     }
 ]
 
@@ -50,10 +54,14 @@ const requestsSlice = createSlice({
         updateData: (state, { payload }) => {
             const newRequests = payload
             return newRequests
+        },
+        removeData: (state, { payload }) => {
+            const newRequests = state.filter(item => item.batteryCode !== payload.batteryCode)
+            return newRequests;
         }
     }
 })
 
-export const { addNewData, updateData } = requestsSlice.actions
+export const { addNewData, updateData, removeData } = requestsSlice.actions
 
 export default requestsSlice.reducer
