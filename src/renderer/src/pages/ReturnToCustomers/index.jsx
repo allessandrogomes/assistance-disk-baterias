@@ -7,17 +7,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { useEffect } from 'react';
-import { updateData } from '../../store/reducers/requests';
 
 export default function ReturnToCustomers() {
 
     const requests = useSelector(state => state.requests)
-
-    const navigate = useNavigate()
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
@@ -42,7 +37,7 @@ export default function ReturnToCustomers() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {requests.map((request) => request.daysOfDelay > 0 ? <TableRow key={request.batteryCode}>
+                        {requests.map((request) => request.daysOfDelay > 0 && request.status === 'PENDENTE'? <TableRow key={request.batteryCode}>
                             <TableCell>{request.request}</TableCell>
                             <TableCell>{request.clientName}</TableCell>
                             <TableCell>{request.phoneNumber}</TableCell>
