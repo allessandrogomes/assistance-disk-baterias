@@ -52,7 +52,8 @@ export default function DefaultPage() {
 
         requestsClone.forEach(request => {
             request.numberOfDaysPassed = definesNumberOfDaysPassed(request.entryDate)
-            request.daysOfDelay = request.numberOfDaysPassed - request.deadlineDays
+            const daysOfDelay = request.numberOfDaysPassed - request.deadlineDays
+            daysOfDelay < 0 ? request.daysOfDelay = 0 : request.daysOfDelay = daysOfDelay
         })
 
         return requestsClone
@@ -98,17 +99,18 @@ export default function DefaultPage() {
     const definesRequisitionBatteryAsLoanBattery = (loanBatteriesUpdated, requestsUpdated) => {
         const loanBatteriesClone = [...loanBatteriesUpdated]
         const requestsClone = [...requestsUpdated]
-        const maximumDealineOfDays = 30
+        const maximumDelayOfDays = 30
 
         requestsClone.forEach(request => {
 
             let newLoanBattery = {
                 batteryModel: '',
                 batteryCode: '',
-                batteryIsAvailable: true
+                batteryIsAvailable: true,
+                origin: 'PERMUTA'
             }
 
-            if (request.status !== "PERMUTA" && request.numberOfDaysPassed > maximumDealineOfDays) {
+            if (request.status !== "PERMUTA" && request.daysOfDelay > maximumDelayOfDays && request.itHasALoanerBattery) {
                 request.status = "PERMUTA"
                 newLoanBattery.batteryModel = request.batteryModel
                 newLoanBattery.batteryCode = request.batteryCode
@@ -138,8 +140,14 @@ export default function DefaultPage() {
 
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '50px', minHeight: '100vh' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', minHeight: '100vh' }}>
             <Title />
+            <Box sx={{ backgroundColor: '#31363F', display: 'flex', gap: '20px', p: '15px' }}>
+                <Button sx={{ backgroundColor: '#FF9800', color: '#000' }} onClick={() => navigate('/')} variant='contained'>Porta</Button>
+                <Button sx={{ backgroundColor: '#5755FE', color: '#000' }} onClick={() => navigate('/retorno')} variant='contained'>Retorno</Button>
+                <Button sx={{ backgroundColor: '#41C9E2', color: '#000' }} onClick={() => navigate('/baterias-de-emprestimo')} variant='contained'>Baterias de empréstimo</Button>
+                <Button sx={{ backgroundColor: '#FF204E', color: '#000' }} onClick={() => navigate('/editar')} variant='contained'>Editar dados</Button>
+            </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Hoje é {date.toLocaleDateString()}</Typography>
                 {isLoading ? (
@@ -147,11 +155,6 @@ export default function DefaultPage() {
                 ) : (
                     <Button onClick={refreshSystem}><RefreshIcon /></Button>
                 )}
-            </Box>
-            <Box sx={{ display: 'flex', gap: '20px' }}>
-                <Button sx={{ backgroundColor: '#FF9800', color: '#000' }} onClick={() => navigate('/')} variant='contained'>Porta</Button>
-                <Button sx={{ backgroundColor: '#5755FE', color: '#000' }} onClick={() => navigate('/retorno')} variant='contained'>Retorno</Button>
-                <Button sx={{ backgroundColor: '#41C9E2', color: '#000' }} onClick={() => navigate('/baterias-de-emprestimo')} variant='contained'>Baterias de empréstimo</Button>
             </Box>
             <Outlet />
             <Footer />
