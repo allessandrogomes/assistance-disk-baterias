@@ -7,12 +7,32 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { updateData } from '../../store/reducers/requests';
 
 export default function ReturnToCustomers() {
 
     const requests = useSelector(state => state.requests)
+
+    const dispatch = useDispatch()
+
+    const sendMessageToCustomer = (request) => {
+
+        const defaultMessage = "Olá, a Assistência Técnica Moura solicita que o(a) senhor(a) retorne para realizar a retirada do seu diagnóstico. Lembre-se, outros consumidores também precisarão de uma bateria de empréstimo para realização do processo de garantia. Agradecemos a compreensão, estamos no aguardo."
+
+        window.open(`https://api.whatsapp.com/send?phone=5574999258446&text=${defaultMessage}`, '_blank')
+
+        let requestsClone = requests.map(request => ({ ...request }))
+
+        requestsClone.forEach(item => {
+            if (item.batteryCode === request.batteryCode) {
+                item.numberOfTimesReturned += 1
+            }
+        })
+
+        dispatch(updateData(requestsClone))
+    }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
@@ -37,7 +57,7 @@ export default function ReturnToCustomers() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {requests.map((request) => request.daysOfDelay > 0 && request.status === 'PENDENTE'? <TableRow key={request.batteryCode}>
+                        {requests.map((request) => request.daysOfDelay > 0 && request.status === 'PENDENTE' ? <TableRow key={request.batteryCode}>
                             <TableCell>{request.request}</TableCell>
                             <TableCell>{request.clientName}</TableCell>
                             <TableCell>{request.phoneNumber}</TableCell>
@@ -49,7 +69,7 @@ export default function ReturnToCustomers() {
                             <TableCell>{request.loanBatteryCode}</TableCell>
                             <TableCell>{request.daysOfDelay}</TableCell>
                             <TableCell>{request.numberOfTimesReturned}</TableCell>
-                            <TableCell><Button><WhatsAppIcon /></Button></TableCell>
+                            <TableCell><Button onClick={() => sendMessageToCustomer(request)}><WhatsAppIcon /></Button></TableCell>
                             <TableCell>{request.status}</TableCell>
                         </TableRow> : '')}
                     </TableBody>
