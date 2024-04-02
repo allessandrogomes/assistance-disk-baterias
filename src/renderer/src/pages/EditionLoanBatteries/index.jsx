@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { removeLoanBatteries, updateLoanBatteries } from "../../store/reducers/loanBatteries"
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import ModalConfirmDelete from "../../components/ModalConfirmDelete";
+import FilteringField from "../../components/FilteringField";
 
 
 export default function EditionLoanBatteries() {
@@ -14,10 +15,15 @@ export default function EditionLoanBatteries() {
 
     const dispatch = useDispatch()
 
+    const [dataRenderer, setDataRenderer] = useState(loanBatteries.map(item => ({ ...item })))
+
     const [editedDataList, setEditedDataList] = useState(loanBatteries.map(item => ({ ...item })))
     const [editIndex, setEditIndex] = useState(-1)
+
     const [openModalConfirmDelete, setOpenModalConfirmDelete] = useState(false)
     const [itemListToDelete, setItemListToDelete] = useState()
+
+    const [filterValue, setFilterValue] = useState('')
 
     const handleEdit = (index) => {
         setEditIndex(index)
@@ -38,6 +44,7 @@ export default function EditionLoanBatteries() {
         dispatch(removeLoanBatteries(item))
         const updatedDataList = editedDataList.filter(loanBattery => loanBattery.batteryCode !== item.batteryCode)
         setEditedDataList(updatedDataList)
+        setDataRenderer(updatedDataList)
         setOpenModalConfirmDelete(false)
     }
 
@@ -46,10 +53,26 @@ export default function EditionLoanBatteries() {
 
         const updatedDataList = editedDataList.map((item, i) => (i === index ? { ...item, [name]: value } : item))
         setEditedDataList(updatedDataList)
+        setDataRenderer(updatedDataList)
     }
+
+    useEffect(() => {
+
+        if (filterValue.length > 0) {
+            let filteredLoanBatteries = editedDataList.filter(item => {
+                const stringBatteryCode = item.batteryCode.toString().toLowerCase()
+                return stringBatteryCode.includes(filterValue.toLowerCase())
+            })
+            setDataRenderer(filteredLoanBatteries)
+        } else {
+            setDataRenderer(editedDataList)
+        }
+
+    }, [filterValue])
 
     return (
         <Box sx={{ minHeight: '45vh', maxWidth: '95vw' }}>
+            <FilteringField inputLabelFilterBy="código da bateria" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue}/>
             <TableContainer sx={{ width: '100%', backgroundColor: 'white', }}>
                 <Table>
                     <TableHead>
@@ -61,7 +84,7 @@ export default function EditionLoanBatteries() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {editedDataList.map((item, index) => {
+                        {dataRenderer.map((item, index) => {
                             return <TableRow key={index}>
                                 {editIndex === index ? (
                                     <>

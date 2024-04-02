@@ -1,11 +1,12 @@
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, Input, InputLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { removeData, updateData } from "../../store/reducers/requests";
 import ModalConfirmDelete from "../../components/ModalConfirmDelete";
+import FilteringField from "../../components/FilteringField";
 
 
 export default function EditionRequests() {
@@ -14,10 +15,15 @@ export default function EditionRequests() {
 
     const dispatch = useDispatch()
 
+    const [dataRenderer, setDataRenderer] = useState(requests.map(item => ({ ...item })))
+
     const [editedDataList, setEditedDataList] = useState(requests.map(item => ({ ...item })))
     const [editIndex, setEditIndex] = useState(-1)
+
     const [openModalConfirmDelete, setOpenModalConfirmDelete] = useState(false)
     const [itemListToDelete, setItemListToDelete] = useState()
+
+    const [filterValue, setFilterValue] = useState('')
 
     const handleEdit = (index) => {
         setEditIndex(index)
@@ -37,6 +43,7 @@ export default function EditionRequests() {
         dispatch(removeData(item))
         const updatedDataList = editedDataList.filter(request => request.batteryCode !== item.batteryCode)
         setEditedDataList(updatedDataList)
+        setDataRenderer(updatedDataList)
         setOpenModalConfirmDelete(false)
     }
 
@@ -45,10 +52,26 @@ export default function EditionRequests() {
 
         const updatedDataList = editedDataList.map((item, i) => (i === index ? { ...item, [name]: value } : item))
         setEditedDataList(updatedDataList)
+        setDataRenderer(updatedDataList)
     }
+
+    useEffect(() => {
+
+        if (filterValue.length > 0) {
+            let filteredRequests = editedDataList.filter(item => {
+                const stringRequestNumber = item.request.toString().toLowerCase()
+                return stringRequestNumber.includes(filterValue.toLowerCase())
+            })
+            setDataRenderer(filteredRequests)
+        } else {
+            setDataRenderer(editedDataList)
+        }
+
+    }, [filterValue])
 
     return (
         <Box sx={{ minHeight: '45vh', maxWidth: '95vw' }}>
+            <FilteringField inputLabelFilterBy="número da requisição" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue}/>
             <TableContainer sx={{ width: '100%', backgroundColor: 'white', }}>
                 <Table>
                     <TableHead>
@@ -68,7 +91,7 @@ export default function EditionRequests() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {editedDataList.map((item, index) => {
+                        {dataRenderer.map((item, index) => {
                             return <TableRow key={index}>
                                 {editIndex === index ? (
                                     <>
