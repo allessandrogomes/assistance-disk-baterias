@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import ReturnToCustomers from "./pages/ReturnToCustomers";
 import DefaultPage from "./components/DefaultPage";
@@ -10,7 +10,7 @@ import EditionLoanBatteries from "./pages/EditionLoanBatteries";
 
 export default function Router() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 <Route path='/' element={<DefaultPage />}>
                     <Route index element={<Home />} />
@@ -21,6 +21,6 @@ export default function Router() {
                     <Route path='/editar/baterias-de-emprestimo' element={<EditionLoanBatteries />} />
                 </Route>
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
