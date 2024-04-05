@@ -6,6 +6,7 @@ import LoanBatteries from "./pages/LoanBatteries";
 import Edition from "./pages/Edition";
 import EditionRequests from "./pages/EditionRequests";
 import EditionLoanBatteries from "./pages/EditionLoanBatteries";
+import RequestOutput from "./pages/RequestOutput";
 
 
 export default function Router() {
@@ -14,6 +15,7 @@ export default function Router() {
             <Routes>
                 <Route path='/' element={<DefaultPage />}>
                     <Route index element={<Home />} />
+                    <Route path='/saida' element={<RequestOutput />} />
                     <Route path='/retorno' element={<ReturnToCustomers />} />
                     <Route path='/baterias-de-emprestimo' element={<LoanBatteries />} />
                     <Route path='/editar' element={<Edition />} />
