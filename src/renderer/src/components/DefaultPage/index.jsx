@@ -143,10 +143,10 @@ export default function DefaultPage() {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', minHeight: '100vh' }}>
             <Title />
             <Box sx={{ backgroundColor: '#31363F', display: 'flex', gap: '20px', p: '15px' }}>
-                <Button sx={{ backgroundColor: '#FF9800', color: '#000' }} onClick={() => navigate('/')} variant='contained'>Porta</Button>
-                <Button sx={{ backgroundColor: '#90D26D', color: '#000' }} onClick={() => navigate('/')} variant='contained'>Saída</Button>
-                <Button sx={{ backgroundColor: '#5755FE', color: '#000' }} onClick={() => navigate('/retorno')} variant='contained'>Retorno</Button>
+                <Button sx={{ backgroundColor: '#FF9800', color: '#000' }} onClick={() => navigate('/')} variant='contained'>Entrada</Button>
+                <Button sx={{ backgroundColor: '#90D26D', color: '#000' }} onClick={() => navigate('/saida')} variant='contained'>Saída</Button>
                 <Button sx={{ backgroundColor: '#41C9E2', color: '#000' }} onClick={() => navigate('/baterias-de-emprestimo')} variant='contained'>Baterias de empréstimo</Button>
+                <Button sx={{ backgroundColor: '#5755FE', color: '#000' }} onClick={() => navigate('/retorno')} variant='contained'>Retorno</Button>
                 <Button sx={{ backgroundColor: '#FF204E', color: '#000' }} onClick={() => navigate('/editar')} variant='contained'>Editar dados</Button>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
