@@ -1,4 +1,4 @@
-import { Box, Button, Input, InputLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -72,7 +72,7 @@ export default function EditionRequests() {
     return (
         <Box sx={{ minHeight: '45vh', maxWidth: '95vw' }}>
             <FilteringField inputLabelFilterBy="número da requisição" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue}/>
-            <TableContainer sx={{ width: '100%', backgroundColor: 'white', }}>
+            <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'white', }}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -86,6 +86,7 @@ export default function EditionRequests() {
                             <TableCell>Código bateria</TableCell>
                             <TableCell>Bateria empréstimo</TableCell>
                             <TableCell>Código bateria empréstimo</TableCell>
+                            <TableCell>Status</TableCell>
                             <TableCell>Editar</TableCell>
                             <TableCell>Excluir</TableCell>
                         </TableRow>
@@ -142,6 +143,7 @@ export default function EditionRequests() {
                                         <TableCell>{item.batteryCode}</TableCell>
                                         <TableCell>{item.loanBatteryModel}</TableCell>
                                         <TableCell>{item.loanBatteryCode}</TableCell>
+                                        <TableCell>{item.status}</TableCell>
                                         <TableCell>
                                             <Button onClick={() => handleEdit(index)}><EditIcon /></Button>
                                         </TableCell>
