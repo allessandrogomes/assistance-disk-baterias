@@ -83,8 +83,8 @@ export default function LoanBatteries() {
             }
             <form onSubmit={handleSubmit}>
                 <Box sx={{ backgroundColor: '#EEEEEE', borderRadius: '10px', display: 'flex', gap: '20px', p: '10px' }}>
-                    <TextField label="Modelo da bateria" onChange={updateFormData} name="batteryModel" value={formData.batteryModel} variant="outlined" required/>
-                    <TextField label="Código da bateria" onChange={updateFormData} name="batteryCode" value={formData.batteryCode} variant="outlined" required/>
+                    <TextField label="Modelo da bateria" onChange={updateFormData} name="batteryModel" value={formData.batteryModel} variant="outlined" required />
+                    <TextField label="Código da bateria" onChange={updateFormData} name="batteryCode" value={formData.batteryCode} variant="outlined" required />
                     <Button variant="contained" type="submit">Adicionar nova bateria</Button>
                 </Box>
             </form>
@@ -173,8 +173,21 @@ export default function LoanBatteries() {
                                         <TableCell>{battery.batteryModel}</TableCell>
                                         <TableCell>{battery.batteryCode}</TableCell>
                                         <TableCell>REQUISIÇÃO</TableCell>
-                                        <TableCell>{battery.request}</TableCell>
                                         <TableCell>{battery.daysOfDelay}</TableCell>
+                                        <TableCell>{battery.request}</TableCell>
+                                    </TableRow>
+                                )
+                            }
+                        })}
+                        {requests.map(battery => {
+                            if (battery.loanedRouteBatteryRequestNumber.length > 0) {
+                                return (
+                                    <TableRow key={battery.loanBatteryCode}>
+                                        <TableCell>{battery.loanBatteryModel}</TableCell>
+                                        <TableCell>{battery.loanBatteryCode}</TableCell>
+                                        <TableCell>ROTA</TableCell>
+                                        <TableCell></TableCell>
+                                        <TableCell>{battery.loanedRouteBatteryRequestNumber}</TableCell>
                                     </TableRow>
                                 )
                             }
