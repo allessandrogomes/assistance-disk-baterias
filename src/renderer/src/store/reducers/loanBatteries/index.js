@@ -44,7 +44,8 @@ const loanBatteriesSlice = createSlice({
             return loanBatteriesUpdated
         },
         updateLoanBatteries: (state, { payload }) => {
-            return payload
+            const newLoanBatteries = payload
+            return newLoanBatteries
         },
         removeLoanBatteries: (state, { payload }) => {
             const newLoanBatteries = state.filter(item => item.batteryCode !== payload.batteryCode)
