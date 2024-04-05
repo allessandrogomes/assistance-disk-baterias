@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { removeLoanBatteries, updateLoanBatteries } from "../../store/reducers/loanBatteries"
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
@@ -73,7 +73,7 @@ export default function EditionLoanBatteries() {
     return (
         <Box sx={{ minHeight: '45vh', maxWidth: '95vw' }}>
             <FilteringField inputLabelFilterBy="código da bateria" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue}/>
-            <TableContainer sx={{ width: '100%', backgroundColor: 'white', }}>
+            <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'white', }}>
                 <Table>
                     <TableHead>
                         <TableRow>
