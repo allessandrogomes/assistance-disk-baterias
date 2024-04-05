@@ -50,6 +50,8 @@ export default function ReturnToCustomers() {
                             <TableCell>Código da bateria</TableCell>
                             <TableCell>Bateria de empréstimo</TableCell>
                             <TableCell>Código bateria de empréstimo</TableCell>
+                            <TableCell>Empréstimo de rota</TableCell>
+                            <TableCell>N° requisição rota emprestada</TableCell>
                             <TableCell>Dias de atraso</TableCell>
                             <TableCell>Número de retornos</TableCell>
                             <TableCell>Contatar</TableCell>
@@ -67,6 +69,8 @@ export default function ReturnToCustomers() {
                             <TableCell>{request.batteryCode}</TableCell>
                             <TableCell>{request.loanBatteryModel}</TableCell>
                             <TableCell>{request.loanBatteryCode}</TableCell>
+                            <TableCell>{request.loanedRouteBatteryRequestNumber.length > 0 ? 'Sim' : 'Não'}</TableCell>
+                            <TableCell>{request.loanedRouteBatteryRequestNumber}</TableCell>
                             <TableCell>{request.daysOfDelay}</TableCell>
                             <TableCell>{request.numberOfTimesReturned}</TableCell>
                             <TableCell><Button onClick={() => sendMessageToCustomer(request)}><WhatsAppIcon /></Button></TableCell>
