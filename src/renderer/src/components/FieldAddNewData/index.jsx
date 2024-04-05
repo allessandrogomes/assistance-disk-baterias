@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import { Button, FormControl, Typography } from '@mui/material';
+import { Box, Button, FormControl, Typography } from '@mui/material';
 import { useState } from 'react';
 import { updateData } from '../../store/reducers/requests';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +25,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
         batteryCode: '',
         loanBatteryModel: '',
         loanBatteryCode: '',
+        loanedRouteBatteryRequestNumber: '',
         deadlineDays: 0,
         numberOfDaysPassed: 0,
         daysOfDelay: 0,
@@ -32,6 +33,8 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
         status: 'PENDENTE',
         itHasALoanerBattery: false
     })
+
+    const [borrowedRouteBattery, setBorrowedRouteBattery] = useState(false)
 
     const formatsForNumbersOnly = (value) => {
         const valueWithJustNumbers = value.replace(/[^\d]+/g, "")
@@ -95,7 +98,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
 
             if (aBatteryWasBorrowed) {
                 formattedFormData.itHasALoanerBattery = true
-                
+
                 const itIsAPendingRequestBattery = requestsClone.some(item => item.batteryCode === formattedFormData.loanBatteryCode && item.status === 'PENDENTE') ? true : false
                 if (itIsAPendingRequestBattery) {
                     requestsClone.forEach(item => {
@@ -219,6 +222,21 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
                     value={formData.loanBatteryCode}
                     variant="filled"
                 />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <input onChange={() => setBorrowedRouteBattery(!borrowedRouteBattery)} type='checkbox' />
+                    <Typography sx={{ color: '#000' }}>Bateria emprestada de Rota</Typography>
+                    {borrowedRouteBattery &&
+                        <TextField
+                            onChange={updateFormData}
+                            label="N° requisição Rota"
+                            id="loanedRouteBatteryRequestNumber"
+                            name="loanedRouteBatteryRequestNumber"
+                            size="small"
+                            variant="filled"
+                            value={formData.loanedRouteBatteryRequestNumber}
+                        />
+                    }
+                </Box>
                 <Button type='submit' variant="contained">Adicionar</Button>
             </FormControl>
         </form>
