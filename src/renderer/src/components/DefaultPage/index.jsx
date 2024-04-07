@@ -97,7 +97,7 @@ export default function DefaultPage() {
     }
 
     const definesRequisitionBatteryAsLoanBattery = (loanBatteriesUpdated, requestsUpdated) => {
-        const loanBatteriesClone = [...loanBatteriesUpdated]
+        let loanBatteriesClone = [...loanBatteriesUpdated]
         const requestsClone = [...requestsUpdated]
         const maximumDelayOfDays = 30
 
@@ -111,10 +111,17 @@ export default function DefaultPage() {
             }
 
             if (request.status !== "PERMUTA" && request.daysOfDelay > maximumDelayOfDays && request.itHasALoanerBattery) {
+                request.status === 'EMPRESTADA' ? newLoanBattery.batteryIsAvailable = false : ''
                 request.status = "PERMUTA"
                 newLoanBattery.batteryModel = request.batteryModel
                 newLoanBattery.batteryCode = request.batteryCode
                 loanBatteriesClone.push(newLoanBattery)
+                loanBatteriesClone.forEach(loanBattery => {
+                    if(loanBattery.batteryCode === request.loanBatteryCode) {
+                        const batteryToBeRemovedFromLoanerBatteries = loanBattery
+                        loanBatteriesClone = loanBatteriesClone.filter(item => item.batteryCode !== batteryToBeRemovedFromLoanerBatteries.batteryCode)
+                    }
+                })
             }
         })
 
