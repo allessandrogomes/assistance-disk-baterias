@@ -1,1 +1,1 @@
-new feat: quando for feita a permuta de baterias, a bateria de empréstimo deverá ser removida das baterias de empréstimo
+new feat: melhorar a validação e formatação dos formulários.
