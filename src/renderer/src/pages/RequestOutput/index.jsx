@@ -2,6 +2,8 @@ import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableH
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateData } from "../../store/reducers/requests";
+import FilteringField from "../../components/FilteringField";
+import ModalConfirmAction from "../../components/ModalConfirmAction";
 
 
 export default function RequestOutput() {
@@ -9,7 +11,37 @@ export default function RequestOutput() {
     const requests = useSelector(state => state.requests)
     const dispatch = useDispatch()
 
+    const [dataRenderer, setDataRenderer] = useState(requests)
+
     const [requestsToOutput, setRequestsToOutput] = useState([])
+    const [filterValue, setFilterValue] = useState('')
+
+    const [exitButtonDisabled, setExitButtonDisabled] = useState(true)
+
+    const [openModalConfirmExit, setOpenModalConfirmExit] = useState(false)
+
+    useEffect(() => {
+        if (filterValue.length > 0) {
+            let filteredRequests = requests.filter(item => {
+                const stringRequestNumber = item.request.toString().toLowerCase()
+                return stringRequestNumber.includes(filterValue.toLowerCase())
+            })
+            setDataRenderer(filteredRequests)
+        } else {
+            setDataRenderer(requests)
+        }
+
+    }, [filterValue])
+
+    const checksIfTheRequestIsSelected = (request) => {
+        let checkValue = false
+
+        requestsToOutput.forEach(item => {
+            item.id === request.id ? checkValue = true : ''
+        })
+
+        return checkValue
+    }
 
     const updateRequestsToOutput = (request) => {
 
@@ -20,6 +52,10 @@ export default function RequestOutput() {
         })
 
         alreadyExists ? setRequestsToOutput(requestsToOutput.filter(item => item.batteryCode !== request.batteryCode)) : setRequestsToOutput([...requestsToOutput, request])
+    }
+
+    const handleOpenModalConfirmExit = () => {
+        setOpenModalConfirmExit(true)
     }
 
     const makeExits = () => {
@@ -44,10 +80,21 @@ export default function RequestOutput() {
         dispatch(updateData(requestsClone))
 
         setRequestsToOutput([])
+
+        setOpenModalConfirmExit(false)
     }
+
+    useEffect(() => {
+        setDataRenderer(requests)
+    }, [requests])
+
+    useEffect(() => {
+        requestsToOutput.length > 0 ? setExitButtonDisabled(false) : setExitButtonDisabled(true)
+    }, [requestsToOutput])
 
     return (
         <Box sx={{ minHeight: '45vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+            <FilteringField onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue} inputLabelFilterBy="número da requisição" />
             <TableContainer component={Paper} sx={{ backgroundColor: '#FFF' }}>
                 <Table>
                     <TableHead>
@@ -63,7 +110,7 @@ export default function RequestOutput() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {requests.map(request => {
+                        {dataRenderer.map(request => {
                             if (request.status === 'PENDENTE') {
                                 return (
                                     <TableRow key={request.batteryCode}>
@@ -74,7 +121,7 @@ export default function RequestOutput() {
                                         <TableCell>{request.loanBatteryModel}</TableCell>
                                         <TableCell>{request.loanBatteryCode}</TableCell>
                                         <TableCell>{request.status}</TableCell>
-                                        <TableCell align="center"><input onChange={() => updateRequestsToOutput(request)} type="checkbox" /></TableCell>
+                                        <TableCell align="center"><input checked={checksIfTheRequestIsSelected(request)} onChange={() => updateRequestsToOutput(request)} type="checkbox" /></TableCell>
                                     </TableRow>
                                 )
                             }
@@ -82,7 +129,15 @@ export default function RequestOutput() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button onClick={makeExits} color="success" sx={{ width: '200px' }} variant="contained">Realizar saídas</Button>
+            <Button disabled={exitButtonDisabled} onClick={handleOpenModalConfirmExit} color="success" sx={{ width: '200px' }} variant="contained">Realizar saídas</Button>
+            {openModalConfirmExit &&
+                <ModalConfirmAction 
+                    alertDialogTitle="Confime as requisições para realizar a saída"
+                    alertDialogDescription={requestsToOutput.map(item => <li key={item.id}>{item.request}</li>)}
+                    onClickConfirm={makeExits}
+                    onClickCancel={() => setOpenModalConfirmExit(false)}
+                />
+            }
         </Box>
     )
 }
