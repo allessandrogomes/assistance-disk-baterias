@@ -33,7 +33,7 @@ export default function DataTable() {
     return (
         <div style={{ height: '70vh', width: '95vw' }}>
             <DataGrid
-                getRowId={(row) => row.batteryCode}
+                getRowId={(row) => row.id}
                 sx={{ color: '#EEEEEE', backgroundColor: '#31363F' }}
                 rows={requests}
                 columns={columns}
