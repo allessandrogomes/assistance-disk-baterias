@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { updateData } from '../../store/reducers/requests';
 import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
+import { v4 as uuidv4 } from 'uuid'
 
 export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
 
@@ -15,6 +16,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
     const dispatch = useDispatch()
 
     const [formData, setFormData] = useState({
+        id: uuidv4(),
         request: '',
         clientName: '',
         cpf: '',
@@ -91,7 +93,7 @@ export default function FieldAddNewData({ requestRegisteredSuccessfully }) {
             deadlineDays: setsTheDeadlineDays(formData.entryDate, formData.returnDate)
         };
 
-        if (requestsClone.some(item => item.batteryCode === formData.batteryCode)) {
+        if (requestsClone.some(item => item.batteryCode === formData.batteryCode && item.status !== 'FINALIZADA')) {
             requestRegisteredSuccessfully(false)
         } else {
             const aBatteryWasBorrowed = formattedFormData.loanBatteryCode.length > 0 ? true : false
