@@ -3,8 +3,10 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 
-export default function ModalConfirmDelete({ onClickCancel, onClickDelete }) {
+export default function ModalConfirmAction({ alertDialogTitle, alertDialogDescription, onClickCancel, onClickConfirm, textConfirmAction }) {
     return (
         <Dialog
             open={true}
@@ -12,12 +14,17 @@ export default function ModalConfirmDelete({ onClickCancel, onClickDelete }) {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">
-                {"Deseja realmente excluir?"}
+                {alertDialogTitle}
             </DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    {alertDialogDescription}
+                </DialogContentText>
+            </DialogContent>
             <DialogActions>
                 <Button onClick={(e) => onClickCancel(e)}>Cancelar</Button>
-                <Button onClick={(e) => onClickDelete(e)} autoFocus>
-                    Excluir
+                <Button onClick={(e) => onClickConfirm(e)} autoFocus>
+                    Confirmar
                 </Button>
             </DialogActions>
         </Dialog>
