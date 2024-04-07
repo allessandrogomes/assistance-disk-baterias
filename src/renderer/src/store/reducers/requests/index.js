@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { v4 as uuidv4 } from 'uuid'
 
+uuidv4()
 
 const initialState = [
     {
+        id: uuidv4(),
         request: 1,
         clientName: 'José',
         cpf: '24398744390',
@@ -23,6 +26,7 @@ const initialState = [
         itHasALoanerBattery: false,
     },
     {
+        id: uuidv4(),
         request: 2,
         clientName: 'Maria',
         cpf: '44426589645',
