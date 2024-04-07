@@ -5,8 +5,8 @@ import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableH
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-import ModalConfirmDelete from "../../components/ModalConfirmDelete";
 import FilteringField from "../../components/FilteringField";
+import ModalConfirmAction from "../../components/ModalConfirmAction";
 
 
 export default function EditionLoanBatteries() {
@@ -118,9 +118,11 @@ export default function EditionLoanBatteries() {
                 </Table>
             </TableContainer>
             {openModalConfirmDelete ?
-                <ModalConfirmDelete
+                <ModalConfirmAction
+                    alertDialogTitle="Confime a bateria para excluir"
+                    alertDialogDescription={<li>{itemListToDelete.batteryModel} {itemListToDelete.batteryCode}</li>}
+                    onClickConfirm={() => handleDelete(itemListToDelete)}
                     onClickCancel={() => setOpenModalConfirmDelete(false)}
-                    onClickDelete={() => handleDelete(itemListToDelete)}
                 /> :
                 ''
             }

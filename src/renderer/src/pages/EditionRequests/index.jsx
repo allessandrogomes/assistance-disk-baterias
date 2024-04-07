@@ -5,8 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import { useEffect, useState } from "react";
 import { removeData, updateData } from "../../store/reducers/requests";
-import ModalConfirmDelete from "../../components/ModalConfirmDelete";
 import FilteringField from "../../components/FilteringField";
+import ModalConfirmAction from "../../components/ModalConfirmAction";
 
 
 export default function EditionRequests() {
@@ -71,7 +71,7 @@ export default function EditionRequests() {
 
     return (
         <Box sx={{ minHeight: '45vh', maxWidth: '95vw' }}>
-            <FilteringField inputLabelFilterBy="número da requisição" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue}/>
+            <FilteringField inputLabelFilterBy="número da requisição" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue} />
             <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'white', }}>
                 <Table>
                     <TableHead>
@@ -160,9 +160,11 @@ export default function EditionRequests() {
                 </Table>
             </TableContainer>
             {openModalConfirmDelete ?
-                <ModalConfirmDelete
+                <ModalConfirmAction
+                    alertDialogTitle="Confime a requisição para excluir"
+                    alertDialogDescription={<li>{itemListToDelete.request}</li>}
+                    onClickConfirm={() => handleDelete(itemListToDelete)}
                     onClickCancel={() => setOpenModalConfirmDelete(false)}
-                    onClickDelete={() => handleDelete(itemListToDelete)}
                 /> :
                 ''
             }
