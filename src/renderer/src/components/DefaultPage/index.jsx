@@ -3,7 +3,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import 'normalize.css'
-import '../../index.css'
+import '../../assets/index.css'
 import { Outlet, useNavigate } from "react-router-dom";
 import Title from "../../components/Title";
 import { Box, Button, Typography } from '@mui/material';
@@ -31,7 +31,7 @@ export default function DefaultPage() {
 
     useEffect(() => {
         updateSystem()
-    }, [requests]);
+    }, [requests, loanBatteries]);
 
     const updateSystem = () => {
         const requestsUpdated = updateRequestsDependentOnTodaysDate()
@@ -39,11 +39,13 @@ export default function DefaultPage() {
         const { loanBatteriesCloneUpdated, requestsCloneUpdated } = definesRequisitionBatteryAsLoanBattery(loanBatteriesUpdated, requestsUpdated)
 
         if (!isEqual(requests, requestsCloneUpdated)) {
-            dispatch(updateData(requestsCloneUpdated));
+            dispatch(updateData(requestsCloneUpdated))
+            window.bridgeRequests.saveDataRequests(requestsCloneUpdated)
         }
 
         if (!isEqual(loanBatteries, loanBatteriesCloneUpdated)) {
-            dispatch(updateLoanBatteries(loanBatteriesCloneUpdated));
+            dispatch(updateLoanBatteries(loanBatteriesCloneUpdated))
+            window.bridgeLoanBatteries.saveDataLoanBatteries(loanBatteriesCloneUpdated)
         }
     }
 
@@ -117,7 +119,7 @@ export default function DefaultPage() {
                 newLoanBattery.batteryCode = request.batteryCode
                 loanBatteriesClone.push(newLoanBattery)
                 loanBatteriesClone.forEach(loanBattery => {
-                    if(loanBattery.batteryCode === request.loanBatteryCode) {
+                    if (loanBattery.batteryCode === request.loanBatteryCode) {
                         const batteryToBeRemovedFromLoanerBatteries = loanBattery
                         loanBatteriesClone = loanBatteriesClone.filter(item => item.batteryCode !== batteryToBeRemovedFromLoanerBatteries.batteryCode)
                     }
