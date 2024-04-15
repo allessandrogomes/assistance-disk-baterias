@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-export default function ModalConfirmAction({ alertDialogTitle, alertDialogDescription, onClickCancel, onClickConfirm, textConfirmAction }) {
+export default function ModalConfirmAction({ alertDialogTitle, alertDialogDescription, onClickCancel, onClickConfirm }) {
     return (
         <Dialog
             open={true}
