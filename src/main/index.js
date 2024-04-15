@@ -1,7 +1,9 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+const fs = require('fs-extra');
+const path = require('path');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -52,3 +54,112 @@ app.on('window-all-closed', () => {
   }
 })
 
+// Salva os dados atualizados de requisições
+ipcMain.on('saveDataRequests', (event, dataUpdated) => {
+  const userDataPath = app.getPath('userData')
+  const filePath = path.join(userDataPath, 'databases/data/dataRequests.json')
+
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error("Erro ao ler o arquivo:", err)
+      return
+    }
+
+    let existingData = []
+    try {
+      existingData = JSON.parse(data)
+    } catch (parseError) {
+      console.error("Erro ao fazer parse dos dados existentes:", parseError)
+      return
+    }
+
+    existingData = dataUpdated
+
+    fs.writeFile(filePath, JSON.stringify(existingData, null, 2), (err) => {
+      if (err) {
+        console.error("Erro ao escrever no arquivo:", err)
+        return
+      }
+      console.log("Dados salvos com sucesso.")
+
+      event.sender.send('saveDataRequests', true)
+    })
+  })
+})
+
+// Lê os dados de dataRequests.json e envia para o front end
+ipcMain.on('readDataRequests', (event) => {
+  const userDataPath = app.getPath('userData')
+  const filePath = path.join(userDataPath, 'databases/data/dataRequests.json')
+
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error("Erro ao ler o arquivo:", err)
+      event.sender.send('readDataRequests', { error: err.message })
+      return
+    }
+
+    try {
+      const jsonData = JSON.parse(data)
+      event.sender.send('readDataRequestsResponse', { data: jsonData })
+    } catch (parseError) {
+      console.error("Erro ao fazer parse dos dados:", parseError)
+      event.sender.send('readDataRequests', { error: parseError.message })
+    }
+  })
+})
+
+// Salva os dados atualizados de baterias de empréstimo
+ipcMain.on('saveDataLoanBatteries', (event, dataUpdated) => {
+  const userDataPath = app.getPath('userData')
+  const filePath = path.join(userDataPath, 'databases/data/dataLoanBatteries.json')
+
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error("Erro ao ler o arquivo:", err)
+      return
+    }
+
+    let existingData = []
+    try {
+      existingData = JSON.parse(data)
+    } catch (parseError) {
+      console.error("Erro ao fazer parse dos dados existentes:", parseError)
+      return
+    }
+
+    existingData = dataUpdated
+
+    fs.writeFile(filePath, JSON.stringify(existingData, null, 2), (err) => {
+      if (err) {
+        console.error("Erro ao escrever no arquivo:", err)
+        return
+      }
+      console.log("Dados salvos com sucesso.")
+
+      event.sender.send('saveDataLoanBatteries', true)
+    })
+  })
+})
+
+// Lê os dados de dataLoanBatteries.json e envia para o front end
+ipcMain.on('readDataLoanBatteries', (event) => {
+  const userDataPath = app.getPath('userData')
+  const filePath = path.join(userDataPath, 'databases/data/dataLoanBatteries.json')
+
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error("Erro ao ler o arquivo:", err)
+      event.sender.send('readDataLoanBatteries', { error: err.message })
+      return
+    }
+
+    try {
+      const jsonData = JSON.parse(data)
+      event.sender.send('readDataLoanBatteriesResponse', { data: jsonData })
+    } catch (parseError) {
+      console.error("Erro ao fazer parse dos dados:", parseError)
+      event.sender.send('readDataLoanBatteries', { error: parseError.message })
+    }
+  })
+})
