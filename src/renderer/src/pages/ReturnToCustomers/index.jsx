@@ -19,9 +19,9 @@ export default function ReturnToCustomers() {
 
     const sendMessageToCustomer = (request) => {
 
-        const defaultMessage = "Olá, a Assistência Técnica Moura solicita que o(a) senhor(a) retorne para realizar a retirada do seu diagnóstico. Lembre-se, outros consumidores também precisarão de uma bateria de empréstimo para realização do processo de garantia. Agradecemos a compreensão, estamos no aguardo."
+        const defaultMessage = `Olá ${request.clientName}, a Assistência Técnica Moura solicita que o(a) senhor(a) retorne para realizar a retirada do seu diagnóstico. Lembre-se, outros consumidores também precisarão de uma bateria de empréstimo para realização do processo de garantia. Agradecemos a compreensão, estamos no aguardo.`
 
-        window.open(`https://api.whatsapp.com/send?phone=5574999258446&text=${defaultMessage}`, '_blank')
+        window.open(`https://api.whatsapp.com/send?phone=55${request.phoneNumber}&text=${defaultMessage}`, '_blank')
 
         let requestsClone = requests.map(request => ({ ...request }))
 
@@ -32,6 +32,7 @@ export default function ReturnToCustomers() {
         })
 
         dispatch(updateData(requestsClone))
+        window.bridgeRequests.saveDataRequests(requestsClone)
     }
 
     return (
@@ -47,10 +48,10 @@ export default function ReturnToCustomers() {
                             <TableCell>Data entrada</TableCell>
                             <TableCell>Data retorno</TableCell>
                             <TableCell>Bateria</TableCell>
-                            <TableCell>Código da bateria</TableCell>
-                            <TableCell>Bateria de empréstimo</TableCell>
-                            <TableCell>Código bateria de empréstimo</TableCell>
-                            <TableCell>Empréstimo de rota</TableCell>
+                            <TableCell>Código bateria</TableCell>
+                            <TableCell>Bateria empréstimo</TableCell>
+                            <TableCell>Código empréstimo</TableCell>
+                            <TableCell>Empréstimo rota</TableCell>
                             <TableCell>N° requisição rota emprestada</TableCell>
                             <TableCell>Dias de atraso</TableCell>
                             <TableCell>Número de retornos</TableCell>
@@ -73,13 +74,12 @@ export default function ReturnToCustomers() {
                             <TableCell>{request.loanedRouteBatteryRequestNumber}</TableCell>
                             <TableCell>{request.daysOfDelay}</TableCell>
                             <TableCell>{request.numberOfTimesReturned}</TableCell>
-                            <TableCell><Button onClick={() => sendMessageToCustomer(request)}><WhatsAppIcon /></Button></TableCell>
+                            <TableCell><Button onClick={() => sendMessageToCustomer(request)}><WhatsAppIcon sx={{ color: '#25D366' }}/></Button></TableCell>
                             <TableCell>{request.status}</TableCell>
                         </TableRow> : '')}
                     </TableBody>
                 </Table>
             </TableContainer>
         </Box>
-
     );
 }

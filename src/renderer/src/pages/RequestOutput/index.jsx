@@ -78,6 +78,7 @@ export default function RequestOutput() {
         })
 
         dispatch(updateData(requestsClone))
+        window.bridgeRequests.saveDataRequests(requestsClone)
 
         setRequestsToOutput([])
 
@@ -113,7 +114,7 @@ export default function RequestOutput() {
                         {dataRenderer.map(request => {
                             if (request.status === 'PENDENTE') {
                                 return (
-                                    <TableRow key={request.batteryCode}>
+                                    <TableRow key={request.id}>
                                         <TableCell>{request.request}</TableCell>
                                         <TableCell>{request.clientName}</TableCell>
                                         <TableCell>{request.batteryModel}</TableCell>

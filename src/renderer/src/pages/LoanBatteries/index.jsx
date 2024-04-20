@@ -1,7 +1,7 @@
 import { Alert, Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addNewLoanBattery, updateLoanBatteries } from "../../store/reducers/loanBatteries"
+import { updateLoanBatteries } from "../../store/reducers/loanBatteries"
 
 
 export default function LoanBatteries() {
@@ -20,29 +20,6 @@ export default function LoanBatteries() {
         origin: 'SOS'
     })
 
-    useEffect(() => {
-        updatePage()
-    }, [])
-
-    const updatePage = () => {
-        const loanBatteriesClone = loanBatteries.map(battery => ({ ...battery }))
-
-
-        loanBatteriesClone.forEach(battery => {
-            let isBatteryLoaned = false
-
-            requests.forEach(request => {
-                if (battery.batteryCode === request.loanBatteryCode) {
-                    isBatteryLoaned = true
-                }
-            })
-
-            isBatteryLoaned ? battery.batteryIsAvailable = false : battery.batteryIsAvailable = true
-        })
-
-        dispatch(updateLoanBatteries(loanBatteriesClone))
-    }
-
     const updateFormData = (event) => {
         let { name, value } = event.target
 
@@ -55,11 +32,15 @@ export default function LoanBatteries() {
     const handleSubmit = (event) => {
         event.preventDefault()
 
+        const loanBatteriesUpdated = [...loanBatteries]
+
         if (loanBatteries.some(item => item.batteryCode === formData.batteryCode)) {
             setNewLoanBatteryRegisteredSucessfully(false)
         } else {
             setNewLoanBatteryRegisteredSucessfully(true)
-            dispatch(addNewLoanBattery(formData))
+            loanBatteriesUpdated.push(formData)
+            dispatch(updateLoanBatteries(loanBatteriesUpdated))
+            window.bridgeLoanBatteries.saveDataLoanBatteries(loanBatteriesUpdated)
         }
     }
 

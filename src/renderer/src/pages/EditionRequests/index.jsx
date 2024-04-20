@@ -32,6 +32,7 @@ export default function EditionRequests() {
     const handleSave = (index) => {
         const newDataList = editedDataList.map((item, i) => (i === index ? item : requests[i]))
         dispatch(updateData(newDataList))
+        window.bridgeRequests.saveDataRequests(newDataList)
         setEditIndex(-1)
     }
     const handleOpenModalDelete = (item) => {
@@ -45,6 +46,7 @@ export default function EditionRequests() {
         setEditedDataList(updatedDataList)
         setDataRenderer(updatedDataList)
         setOpenModalConfirmDelete(false)
+        window.bridgeRequests.saveDataRequests(updatedDataList)
     }
 
     const handleChange = (event, index) => {

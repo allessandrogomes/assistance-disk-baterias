@@ -32,6 +32,7 @@ export default function EditionLoanBatteries() {
     const handleSave = (index) => {
         const newDataList = editedDataList.map((item, i) => (i === index ? item : loanBatteries[i]))
         dispatch(updateLoanBatteries(newDataList))
+        window.bridgeLoanBatteries.saveDataLoanBatteries(newDataList)
         setEditIndex(-1)
     }
 
@@ -46,6 +47,7 @@ export default function EditionLoanBatteries() {
         setEditedDataList(updatedDataList)
         setDataRenderer(updatedDataList)
         setOpenModalConfirmDelete(false)
+        window.bridgeLoanBatteries.saveDataLoanBatteries(updatedDataList)
     }
 
     const handleChange = (event, index) => {
