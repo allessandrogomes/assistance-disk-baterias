@@ -1,55 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-
-const initialState = [
-    {
-        batteryModel: 'M60GD',
-        batteryCode: 'C2-4832',
-        batteryIsAvailable: true,
-        origin: 'SOS'
-    },
-    {
-        batteryModel: 'M72HD',
-        batteryCode: 'D5-7291',
-        batteryIsAvailable: false,
-        origin: 'SOS'
-    },
-    {
-        batteryModel: 'M45FD',
-        batteryCode: 'A8-1023',
-        batteryIsAvailable: true,
-        origin: 'SOS'
-    },
-    {
-        batteryModel: 'M80RD',
-        batteryCode: 'F3-6217',
-        batteryIsAvailable: true,
-        origin: 'SOS'
-    },
-    {
-        batteryModel: 'M55SD',
-        batteryCode: 'B4-3765',
-        batteryIsAvailable: false,
-        origin: 'SOS'
+const getData = async () => {
+    try {
+        const jsonData = await window.bridgeLoanBatteries.readDataLoanBatteries()
+        return jsonData
+    } catch (error) {
+        console.error('Erro ao obter os dados:', error)
     }
-]
+}
+
+const initialState = await getData()
 
 const loanBatteriesSlice = createSlice({
     name: 'loanBatteries',
     initialState,
     reducers: {
         addNewLoanBattery: (state, { payload }) => {
-            const loanBatteriesUpdated = [...state]
-            loanBatteriesUpdated.push(payload)
-            return loanBatteriesUpdated
+            state.push(payload)
         },
         updateLoanBatteries: (state, { payload }) => {
-            const newLoanBatteries = payload
-            return newLoanBatteries
+            return payload
         },
         removeLoanBatteries: (state, { payload }) => {
-            const newLoanBatteries = state.filter(item => item.batteryCode !== payload.batteryCode)
-            return newLoanBatteries;
+            return state.filter(item => item.batteryCode !== payload.batteryCode)
         }
     }
 })
