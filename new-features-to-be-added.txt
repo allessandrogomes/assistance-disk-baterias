@@ -1,1 +1,3 @@
-new feat: melhorar a validação e formatação dos formulários.
+atualizar os dias de atraso em caso de edição das datas 
+
+liberar input geral código bateria
