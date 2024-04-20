@@ -1,17 +1,51 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+import iconApp from '../../resources/icon.svg?asset'
 const fs = require('fs-extra');
 const path = require('path');
 
+const documentsPath = `${process.env.USERPROFILE}\\Documents`
+const stockflowManagerPath = `${documentsPath}\\stockflow-manager`
+
+// Cria os arquivos que irão armazenar os dados, caso não existam
+function createFoldersAndDataFiles() {
+  const dataFolderPath = path.join(stockflowManagerPath, 'data')
+  const dataRequestsJsonPath = path.join(dataFolderPath, 'dataRequests.json')
+  const dataLoanBatteriesJsonPath = path.join(dataFolderPath, 'dataLoanBatteries.json')
+
+  if (!fs.existsSync(stockflowManagerPath)) {
+    fs.mkdirSync(stockflowManagerPath, { recursive: true })
+    console.log("Pasta 'stockflow-manager' criada.")
+  }
+
+  if (!fs.existsSync(dataFolderPath)) {
+    fs.mkdirSync(dataFolderPath)
+    console.log("Pasta 'data' criada.")
+  }
+
+  if (!fs.existsSync(dataRequestsJsonPath)) {
+    fs.writeFileSync(dataRequestsJsonPath, '[]')
+    console.log("Arquivo 'dataRequests.json' criado.")
+  }
+
+  if (!fs.existsSync(dataLoanBatteriesJsonPath)) {
+    fs.writeFileSync(dataLoanBatteriesJsonPath, '[]')
+    console.log("Arquivo 'dataLoanBatteries.json' criado.")
+  }
+}
+
 function createWindow() {
+
+  createFoldersAndDataFiles()
+
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
+    icon: path.join(__dirname, '../../resources/icon.ico').replace("app.asar", "app.asar.unpacked"),
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { iconApp } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
@@ -56,8 +90,7 @@ app.on('window-all-closed', () => {
 
 // Salva os dados atualizados de requisições
 ipcMain.on('saveDataRequests', (event, dataUpdated) => {
-  const userDataPath = app.getPath('userData')
-  const filePath = path.join(userDataPath, 'databases/data/dataRequests.json')
+  const filePath = path.join(stockflowManagerPath, 'data/dataRequests.json')
 
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
@@ -89,8 +122,7 @@ ipcMain.on('saveDataRequests', (event, dataUpdated) => {
 
 // Lê os dados de dataRequests.json e envia para o front end
 ipcMain.on('readDataRequests', (event) => {
-  const userDataPath = app.getPath('userData')
-  const filePath = path.join(userDataPath, 'databases/data/dataRequests.json')
+  const filePath = path.join(stockflowManagerPath, 'data/dataRequests.json')
 
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
@@ -111,8 +143,7 @@ ipcMain.on('readDataRequests', (event) => {
 
 // Salva os dados atualizados de baterias de empréstimo
 ipcMain.on('saveDataLoanBatteries', (event, dataUpdated) => {
-  const userDataPath = app.getPath('userData')
-  const filePath = path.join(userDataPath, 'databases/data/dataLoanBatteries.json')
+  const filePath = path.join(stockflowManagerPath, 'data/dataLoanBatteries.json')
 
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
@@ -144,8 +175,7 @@ ipcMain.on('saveDataLoanBatteries', (event, dataUpdated) => {
 
 // Lê os dados de dataLoanBatteries.json e envia para o front end
 ipcMain.on('readDataLoanBatteries', (event) => {
-  const userDataPath = app.getPath('userData')
-  const filePath = path.join(userDataPath, 'databases/data/dataLoanBatteries.json')
+  const filePath = path.join(stockflowManagerPath, 'data/dataLoanBatteries.json')
 
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
