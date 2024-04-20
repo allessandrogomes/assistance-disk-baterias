@@ -1,5 +1,5 @@
 import { Alert, Box } from "@mui/material"
-import FieldAddNewData from "../../components/FieldAddNewData"
+import FormAddRequest from "../../components/FormAddRequest"
 import DataTable from "../../components/Table"
 import { useEffect, useState } from "react"
 
@@ -19,6 +19,8 @@ function Home() {
 
   return (
     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center' }}>
+      <FormAddRequest requestRegisteredSuccessfully={value => setRequestRegisteredSuccessfully(value)}
+      />
       {
         requestRegisteredSuccessfully === true ? (
           <Alert severity="success">Requisição cadastrada com sucesso.</Alert>
@@ -26,8 +28,6 @@ function Home() {
           <Alert severity="warning">Já existe uma bateria com esse código cadastrado, por favor tente novamente.</Alert>
         ) : null
       }
-      <FieldAddNewData requestRegisteredSuccessfully={value => setRequestRegisteredSuccessfully(value)}
-      />
       <DataTable />
     </Box>
   )
