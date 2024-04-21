@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import TextFieldForm from '../TextFieldForm';
 import { updateData } from '../../store/reducers/requests';
+import { setsTheDeadlineDays } from '../../utils/setsTheDeadlineDays';
 
 export default function FormAddRequest({ requestRegisteredSuccessfully }) {
 
@@ -14,29 +15,6 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
     const dispatch = useDispatch()
 
     const [borrowedRouteBattery, setBorrowedRouteBattery] = useState(false)
-
-    function stringToDate(dateString) {
-        const parts = dateString.split('/')
-        
-        const day = parseInt(parts[0], 10)
-        const month = parseInt(parts[1], 10) - 1
-        const year = parseInt(parts[2], 10)
-        
-        const dateObject = new Date(year, month, day)
-        
-        return dateObject
-    }
-
-    const setsTheDeadlineDays = (entryDate, returnDate) => {
-        const entryDateInDateFormat = stringToDate(entryDate)
-        const returnDateInDateFormat = stringToDate(returnDate)
-
-        const differenceInMilliseconds = Math.abs(returnDateInDateFormat - entryDateInDateFormat)
-
-        const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24))
-
-        return differenceInDays
-    }
 
     const checksForDuplicationOfRequest = (request) => {
         const duplicateRequest = requests.some(item => item.batteryCode === request.batteryCode && item.status !== 'FINALIZADA')
@@ -93,9 +71,9 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         entryDate: Yup.string().required('Campo obrigatório').matches(/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/\d{4}$/, 'O formato deve ser dd/mm/aaaa'),
         returnDate: Yup.string().required('Campo obrigatório').matches(/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/\d{4}$/, 'O formato deve ser dd/mm/aaaa'),
         batteryModel: Yup.string().required('Campo obrigatório'),
-        batteryCode: Yup.string().required('Campo obrigatório').matches(/^.{7}$/, 'Código inválido'),
+        batteryCode: Yup.string().required('Campo obrigatório'),
         loanBatteryModel: Yup.string(),
-        loanBatteryCode: Yup.string().matches(/^.{7}$/, 'Código inválido'),
+        loanBatteryCode: Yup.string(),
         loanedRouteBatteryRequestNumber: Yup.string().matches(/^[0-9]+$/, 'Digite apenas números')
     })
 

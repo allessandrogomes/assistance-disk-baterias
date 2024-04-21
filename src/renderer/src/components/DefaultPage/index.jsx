@@ -15,6 +15,9 @@ import { useEffect, useState } from 'react';
 import { isEqual } from 'lodash';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../Footer';
+import { setsTheDeadlineDays } from '../../utils/setsTheDeadlineDays';
+import { definesNumberOfDaysPassed } from '../../utils/definesNumberOfDaysPassed';
+import { defineDaysOfDelay } from '../../utils/defineDaysOfDelay';
 
 
 
@@ -34,7 +37,7 @@ export default function DefaultPage() {
     }, [requests, loanBatteries]);
 
     const updateSystem = () => {
-        const requestsUpdated = updateRequestsDependentOnTodaysDate()
+        const requestsUpdated = updatesDateRelatedAttributes()
         const loanBatteriesUpdated = updatedLoanBatteries(requestsUpdated)
         const { loanBatteriesCloneUpdated, requestsCloneUpdated } = definesRequisitionBatteryAsLoanBattery(loanBatteriesUpdated, requestsUpdated)
 
@@ -49,32 +52,18 @@ export default function DefaultPage() {
         }
     }
 
-    const updateRequestsDependentOnTodaysDate = () => {
+    //Atualiza o numero de dias passados, prazo, e dias de atraso de acordo com o dia de hoje
+    const updatesDateRelatedAttributes = () => {
         let requestsClone = requests.map(request => ({ ...request }))
 
         requestsClone.forEach(request => {
             request.numberOfDaysPassed = definesNumberOfDaysPassed(request.entryDate)
-            const daysOfDelay = request.numberOfDaysPassed - request.deadlineDays
-            daysOfDelay < 0 ? request.daysOfDelay = 0 : request.daysOfDelay = daysOfDelay
+            request.deadlineDays = setsTheDeadlineDays(request.entryDate, request.returnDate)
+            request.daysOfDelay = defineDaysOfDelay(request.numberOfDaysPassed, request.deadlineDays)
         })
 
         return requestsClone
     }
-
-    const definesNumberOfDaysPassed = (entryDate) => {
-        const todayDate = new Date()
-
-        const [day, month, year] = entryDate.split('/')
-        const entryDateInDateFormat = new Date(year, month - 1, day, 0, 0, 0)
-
-        const differenceInMilliseconds = Math.abs(todayDate - entryDateInDateFormat)
-
-        const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24))
-
-        return differenceInDays - 1
-    }
-
-
 
     const updatedLoanBatteries = (requestsUpdated) => {
         let loanBatteriesClone = loanBatteries.map(battery => ({ ...battery }))
