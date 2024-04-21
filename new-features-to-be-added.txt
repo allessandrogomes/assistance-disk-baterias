@@ -1,3 +1,7 @@
-atualizar os dias de atraso em caso de edição das datas 
+adicionar paginação na tabela editar/requisicoes
 
-liberar input geral código bateria
+ao realizar a saída, a bateria emprestada não deve ser removida da requisição
+
+adicionar um id em loanBatteries
+
+ao realizar saída, definir a data do procedimento
