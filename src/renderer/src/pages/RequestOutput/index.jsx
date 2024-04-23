@@ -61,15 +61,13 @@ export default function RequestOutput() {
     const makeExits = () => {
 
         const requestsClone = requests.map(request => ({ ...request }))
+        const todayDate = new Date().toLocaleDateString('pt-BR')
 
         requestsClone.forEach(requestClone => {
             requestsToOutput.forEach(requestToOutput => {
                 if (requestClone.batteryCode === requestToOutput.batteryCode) {
                     requestClone.status = 'FINALIZADA'
-                    requestClone.loanBatteryModel = ''
-                    requestClone.loanBatteryCode = ''
-                    requestClone.loanedRouteBatteryRequestNumber = ''
-                    requestClone.itHasALoanerBattery = false
+                    requestClone.outputDate = todayDate
                 }
                 if (requestClone.batteryCode === requestToOutput.loanBatteryCode) {
                     requestClone.status = 'PENDENTE'
