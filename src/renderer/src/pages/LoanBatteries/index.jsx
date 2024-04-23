@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateLoanBatteries } from "../../store/reducers/loanBatteries"
 
-
 export default function LoanBatteries() {
 
     const dispatch = useDispatch()
