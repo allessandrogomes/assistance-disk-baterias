@@ -15,6 +15,7 @@ const columns = [
     { field: 'loanBatteryCode', headerName: 'Código empréstimo', width: 190 },
     { field: 'daysOfDelay', headerName: 'Dias de atraso', width: 120 },
     { field: 'numberOfTimesReturned', headerName: 'Retornos', width: 80 },
+    { field: 'outputDate', headerName: 'Data saída', width: 120 },
     { field: 'status', headerName: 'Status', width: 100 },
 ]
 
@@ -26,7 +27,6 @@ const initialFilters = [
     }
 ]
 
-
 export default function DataTable() {
 
     const requests = useSelector(state => state.requests)
@@ -35,7 +35,10 @@ export default function DataTable() {
         <div style={{ height: '70vh', width: '95vw' }}>
             <DataGrid
                 getRowId={(row) => row.id}
-                sx={{ color: '#EEEEEE', backgroundColor: '#31363F' }}
+                sx={{
+                    color: '#EEEEEE', backgroundColor: '#31363F',
+                    '.MuiTablePagination-toolbar': { color: '#FFF' }
+                }}
                 rows={requests}
                 columns={columns}
                 initialState={{

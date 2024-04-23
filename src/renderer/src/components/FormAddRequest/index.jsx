@@ -71,9 +71,9 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         entryDate: Yup.string().required('Campo obrigatório').matches(/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/\d{4}$/, 'O formato deve ser dd/mm/aaaa'),
         returnDate: Yup.string().required('Campo obrigatório').matches(/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/\d{4}$/, 'O formato deve ser dd/mm/aaaa'),
         batteryModel: Yup.string().required('Campo obrigatório'),
-        batteryCode: Yup.string().required('Campo obrigatório'),
+        batteryCode: Yup.string().required('Campo obrigatório').matches(/^\S+$/, 'Não é permitido espaços em branco'),
         loanBatteryModel: Yup.string(),
-        loanBatteryCode: Yup.string(),
+        loanBatteryCode: Yup.string().matches(/^\S+$/, 'Não é permitido espaços em branco'),
         loanedRouteBatteryRequestNumber: Yup.string().matches(/^[0-9]+$/, 'Digite apenas números')
     })
 
@@ -85,6 +85,7 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         phoneNumber: '',
         entryDate: '',
         returnDate: '',
+        outputDate: '',
         batteryModel: '',
         batteryCode: '',
         loanBatteryModel: '',
