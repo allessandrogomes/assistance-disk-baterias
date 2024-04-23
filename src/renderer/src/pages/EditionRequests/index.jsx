@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -24,6 +24,17 @@ export default function EditionRequests() {
     const [itemListToDelete, setItemListToDelete] = useState()
 
     const [filterValue, setFilterValue] = useState('')
+
+    const [page, setPage] = useState(1)
+    const requestsPerPage = 10
+    const count = Math.ceil(dataRenderer.length / requestsPerPage)
+    const indexOfLastRequest = page * requestsPerPage
+    const indexOfFirstRequest = indexOfLastRequest - requestsPerPage
+    const currentRequests = dataRenderer.slice(indexOfFirstRequest, indexOfLastRequest)
+
+    const handleChangePage = (event, value) => {
+        setPage(value)
+    }
 
     const handleEdit = (index) => {
         setEditIndex(index)
@@ -72,7 +83,7 @@ export default function EditionRequests() {
     }, [filterValue])
 
     return (
-        <Box sx={{ minHeight: '45vh', maxWidth: '95vw' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '45vh', maxWidth: '95vw' }}>
             <FilteringField inputLabelFilterBy="número da requisição" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue} />
             <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'white', }}>
                 <Table>
@@ -94,7 +105,7 @@ export default function EditionRequests() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {dataRenderer.map((item, index) => {
+                        {currentRequests.map((item, index) => {
                             return <TableRow key={index}>
                                 {editIndex === index ? (
                                     <>
@@ -161,6 +172,19 @@ export default function EditionRequests() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Stack spacing={2} sx={{ alignSelf: 'end', marginTop: '10px' }}>
+                <Pagination 
+                page={page} 
+                onChange={handleChangePage} 
+                color="primary" 
+                count={count} 
+                sx={{ 
+                    '.MuiPaginationItem-page': {color: '#FFF'},
+                    '.MuiPaginationItem-previousNext': {color: '#FFF'},
+                    '.MuiPaginationItem-ellipsis': {color: '#FFF'}
+                }}
+            />
+            </Stack>
             {openModalConfirmDelete ?
                 <ModalConfirmAction
                     alertDialogTitle="Confime a requisição para excluir"
