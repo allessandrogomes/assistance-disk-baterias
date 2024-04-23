@@ -1,0 +1,3 @@
+refatoração de código
+refatoração de componentes
+adicionar testes em componentes
