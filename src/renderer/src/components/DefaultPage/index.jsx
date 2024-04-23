@@ -19,8 +19,6 @@ import { setsTheDeadlineDays } from '../../utils/setsTheDeadlineDays';
 import { definesNumberOfDaysPassed } from '../../utils/definesNumberOfDaysPassed';
 import { defineDaysOfDelay } from '../../utils/defineDaysOfDelay';
 
-
-
 export default function DefaultPage() {
 
     const dispatch = useDispatch()
@@ -73,7 +71,7 @@ export default function DefaultPage() {
             let isBatteryLoaned = false
 
             requests.forEach(request => {
-                if (battery.batteryCode === request.loanBatteryCode) {
+                if (battery.batteryCode === request.loanBatteryCode && request.status !== 'FINALIZADA') {
                     isBatteryLoaned = true
                 }
             })
