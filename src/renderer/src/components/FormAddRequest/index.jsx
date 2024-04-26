@@ -95,6 +95,7 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         numberOfDaysPassed: 0,
         daysOfDelay: 0,
         numberOfTimesReturned: 0,
+        lastReturnDate: '',
         status: 'PENDENTE',
         itHasALoanerBattery: false
     }
