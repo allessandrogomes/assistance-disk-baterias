@@ -93,7 +93,7 @@ export default function RequestOutput() {
 
     return (
         <Box sx={{ minHeight: '45vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
-            <FilteringField onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue} inputLabelFilterBy="número da requisição" />
+            <FilteringField onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue} labelText="Filtrar pelo número da requisição" />
             <TableContainer component={Paper} sx={{ backgroundColor: '#FFF' }}>
                 <Table>
                     <TableHead>

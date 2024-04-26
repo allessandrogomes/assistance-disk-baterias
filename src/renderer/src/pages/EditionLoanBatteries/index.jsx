@@ -73,8 +73,8 @@ export default function EditionLoanBatteries() {
     }, [filterValue])
 
     return (
-        <Box sx={{ minHeight: '45vh', maxWidth: '95vw' }}>
-            <FilteringField inputLabelFilterBy="código da bateria" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue}/>
+        <Box sx={{ minHeight: '45vh', maxWidth: '95vw', gap: '40px', display: 'flex', flexDirection: 'column' }}>
+            <FilteringField labelText="Filtrar pelo código da bateria" onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue}/>
             <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'white', }}>
                 <Table>
                     <TableHead>
