@@ -15,21 +15,28 @@ export default function ReturnToCustomers() {
 
     const requests = useSelector(state => state.requests)
 
+    const todayDate = new Date().toLocaleDateString('pt-BR')
+
     const dispatch = useDispatch()
 
     const sendMessageToCustomer = (request) => {
 
-        const defaultMessage = `Olá ${request.clientName}, a Assistência Técnica Moura solicita que o(a) senhor(a) retorne para realizar a retirada do seu diagnóstico. Lembre-se, outros consumidores também precisarão de uma bateria de empréstimo para realização do processo de garantia. Agradecemos a compreensão, estamos no aguardo.`
+        const defaultMessage = `Olá ${request.clientName}, a Assistência Técnica Moura informa que o seu diagnóstico já está pronto para retirada, solicitamos que o(a) senhor(a) retorne ao depósito para finalização do processo de garantia, estamos no aguardo. Lembre-se, outros consumidores também precisarão de uma bateria de empréstimo para realização do processo de garantia. Agradecemos a compreensão.`
+        const messageWithoutLoanBattery = `Olá ${request.clientName}, a Assistência Técnica Moura informa que o seu diagnóstico já está pronto para retirada, solicitamos que o(a) senhor(a) retorne ao depósito para finalização do processo de garantia, estamos no aguardo.`
+        let message = defaultMessage
 
-        window.open(`https://api.whatsapp.com/send?phone=55${request.phoneNumber}&text=${defaultMessage}`, '_blank')
+        request.loanBatteryCode.length === 0 ? message = messageWithoutLoanBattery : ''
 
         let requestsClone = requests.map(request => ({ ...request }))
 
         requestsClone.forEach(item => {
-            if (item.batteryCode === request.batteryCode) {
+            if (item.id === request.id) {
                 item.numberOfTimesReturned += 1
+                item.lastReturnDate = todayDate
             }
         })
+
+        window.open(`https://api.whatsapp.com/send?phone=55${request.phoneNumber}&text=${message}`, '_blank')
 
         dispatch(updateData(requestsClone))
         window.bridgeRequests.saveDataRequests(requestsClone)
@@ -44,38 +51,28 @@ export default function ReturnToCustomers() {
                         <TableRow>
                             <TableCell>N° Requisição</TableCell>
                             <TableCell>Cliente</TableCell>
-                            <TableCell>Telefone</TableCell>
-                            <TableCell>Data entrada</TableCell>
-                            <TableCell>Data retorno</TableCell>
                             <TableCell>Bateria</TableCell>
                             <TableCell>Código bateria</TableCell>
                             <TableCell>Bateria empréstimo</TableCell>
                             <TableCell>Código empréstimo</TableCell>
-                            <TableCell>Empréstimo rota</TableCell>
-                            <TableCell>N° requisição rota emprestada</TableCell>
                             <TableCell>Dias de atraso</TableCell>
                             <TableCell>Número de retornos</TableCell>
+                            <TableCell>Último retorno</TableCell>
                             <TableCell>Contatar</TableCell>
-                            <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {requests.map((request) => request.daysOfDelay > 0 && request.status === 'PENDENTE' ? <TableRow key={request.batteryCode}>
                             <TableCell>{request.request}</TableCell>
                             <TableCell>{request.clientName}</TableCell>
-                            <TableCell>{request.phoneNumber}</TableCell>
-                            <TableCell>{request.entryDate}</TableCell>
-                            <TableCell>{request.returnDate}</TableCell>
                             <TableCell>{request.batteryModel}</TableCell>
                             <TableCell>{request.batteryCode}</TableCell>
                             <TableCell>{request.loanBatteryModel}</TableCell>
                             <TableCell>{request.loanBatteryCode}</TableCell>
-                            <TableCell>{request.loanedRouteBatteryRequestNumber.length > 0 ? 'Sim' : 'Não'}</TableCell>
-                            <TableCell>{request.loanedRouteBatteryRequestNumber}</TableCell>
                             <TableCell>{request.daysOfDelay}</TableCell>
                             <TableCell>{request.numberOfTimesReturned}</TableCell>
+                            <TableCell>{request.lastReturnDate}</TableCell>
                             <TableCell><Button onClick={() => sendMessageToCustomer(request)}><WhatsAppIcon sx={{ color: '#25D366' }}/></Button></TableCell>
-                            <TableCell>{request.status}</TableCell>
                         </TableRow> : '')}
                     </TableBody>
                 </Table>
