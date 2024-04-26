@@ -2,11 +2,41 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import iconApp from '../../resources/icon.svg?asset'
+import { autoUpdater } from 'electron-updater'
 const fs = require('fs-extra');
 const path = require('path');
 
 const documentsPath = `${process.env.USERPROFILE}\\Documents`
 const stockflowManagerPath = `${documentsPath}\\stockflow-manager`
+ 
+const Anystack = new (require('@anystack/electron-license'))(
+  {
+    api: {
+      key: 'TtKK5I4aeQBrRbWLsObnLHrJM1DTJNk6',
+      productId: '9be35305-dbf2-4806-9f5f-80017ae2b3e9',
+    },
+    license: {
+      requireEmail: false,
+      encryptionKey: 'UNIQUE-KEY',
+    },
+    prompt: {
+      title: 'StockFlow Manager',
+      subtitle: "Ative sua licença para iniciar",
+      logo: iconApp,
+      licenseKey: "Chave de licença",
+      activateLicense: "Ativar licença",
+      errors: {
+        NOT_FOUND: "Chave inválida.",
+        EXPIRED: "Sua licença expirou."
+      }
+    },
+    confirmation: {
+      title: "Licença ativada com sucesso!",
+      subtitle: "Obrigado por ativar a licença do seu produto."
+    }
+  },
+  autoUpdater
+);
 
 // Cria os arquivos que irão armazenar os dados, caso não existam
 function createFoldersAndDataFiles() {
@@ -52,9 +82,7 @@ function createWindow() {
     }
   })
 
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
-  })
+  Anystack.ifAuthorized(mainWindow)
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
