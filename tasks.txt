@@ -1,3 +1,5 @@
+permitir saída após permutada
+adicionar opção de adicionar mais de uma bateria em uma requisição sem precisar escrever todos os dados novamente
 refatoração de código
 refatoração de componentes
 adicionar testes em componentes
