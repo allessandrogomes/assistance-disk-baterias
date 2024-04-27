@@ -37,7 +37,7 @@ export default function DefaultPage() {
     const updateSystem = () => {
         const requestsUpdated = updatesDateRelatedAttributes()
         const loanBatteriesUpdated = updatedLoanBatteries(requestsUpdated)
-        const { loanBatteriesCloneUpdated, requestsCloneUpdated } = definesRequisitionBatteryAsLoanBattery(loanBatteriesUpdated, requestsUpdated)
+        const { loanBatteriesCloneUpdated, requestsCloneUpdated } = carriesOutExchangeProcess(loanBatteriesUpdated, requestsUpdated)
 
         if (!isEqual(requests, requestsCloneUpdated)) {
             dispatch(updateData(requestsCloneUpdated))
@@ -67,25 +67,25 @@ export default function DefaultPage() {
         let loanBatteriesClone = loanBatteries.map(battery => ({ ...battery }))
         const requestsClone = [...requestsUpdated]
 
-        loanBatteriesClone.forEach(battery => {
+        loanBatteriesClone.forEach(loanBattery => {
             let isBatteryLoaned = false
 
             requests.forEach(request => {
-                if (battery.batteryCode === request.loanBatteryCode && request.status !== 'FINALIZADA') {
+                if (loanBattery.batteryCode === request.loanBatteryCode && request.status !== 'FINALIZADA') {
                     isBatteryLoaned = true
                 }
             })
 
-            isBatteryLoaned ? battery.batteryIsAvailable = false : battery.batteryIsAvailable = true
+            isBatteryLoaned ? loanBattery.batteryIsAvailable = false : loanBattery.batteryIsAvailable = true
         })
 
-        const { loanBatteriesCloneUpdated } = definesRequisitionBatteryAsLoanBattery(loanBatteriesClone, requestsClone)
+        const { loanBatteriesCloneUpdated } = carriesOutExchangeProcess(loanBatteriesClone, requestsClone)
 
         return loanBatteriesCloneUpdated
 
     }
 
-    const definesRequisitionBatteryAsLoanBattery = (loanBatteriesUpdated, requestsUpdated) => {
+    const carriesOutExchangeProcess = (loanBatteriesUpdated, requestsUpdated) => {
         let loanBatteriesClone = [...loanBatteriesUpdated]
         const requestsClone = [...requestsUpdated]
         const maximumDelayOfDays = 30
@@ -99,7 +99,7 @@ export default function DefaultPage() {
                 origin: 'PERMUTA'
             }
 
-            if (request.status !== "PERMUTA" && request.daysOfDelay > maximumDelayOfDays && request.itHasALoanerBattery) {
+            if (request.status !== "PERMUTA" && request.daysOfDelay > maximumDelayOfDays && request.itHasALoanerBattery && !request.exchangeCanceled) {
                 request.status === 'EMPRESTADA' ? newLoanBattery.batteryIsAvailable = false : ''
                 request.status = "PERMUTA"
                 newLoanBattery.batteryModel = request.batteryModel
