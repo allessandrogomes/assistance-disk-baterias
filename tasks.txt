@@ -1,4 +1,4 @@
-permitir saída após permutada
+ao realizar a saída, deverá parar de contar os dias de atraso
 adicionar opção de adicionar mais de uma bateria em uma requisição sem precisar escrever todos os dados novamente
 refatoração de código
 refatoração de componentes
