@@ -96,6 +96,7 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         daysOfDelay: 0,
         numberOfTimesReturned: 0,
         lastReturnDate: '',
+        exchangeCanceled: false,
         status: 'PENDENTE',
         itHasALoanerBattery: false
     }

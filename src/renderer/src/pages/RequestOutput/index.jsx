@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateData } from "../../store/reducers/requests";
 import FilteringField from "../../components/FilteringField";
 import ModalConfirmAction from "../../components/ModalConfirmAction";
+import { useNavigate } from "react-router-dom";
 
 
 export default function RequestOutput() {
+
+    const navigate = useNavigate()
 
     const requests = useSelector(state => state.requests)
     const dispatch = useDispatch()
@@ -69,6 +72,7 @@ export default function RequestOutput() {
                     requestClone.status = 'FINALIZADA'
                     requestClone.outputDate = todayDate
                 }
+                //caso a requisição finalizada tenha como empréstimo uma bateria de outra requisição, esta retorna para seus status de 'PENDENTE'
                 if (requestClone.batteryCode === requestToOutput.loanBatteryCode) {
                     requestClone.status = 'PENDENTE'
                 }
@@ -93,6 +97,7 @@ export default function RequestOutput() {
 
     return (
         <Box sx={{ minHeight: '45vh', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+            <Button onClick={() => navigate("/saida/requisicao-permutada")} color="error" variant="contained">Saída requisição permutada</Button>
             <FilteringField onChangeValue={(value) => setFilterValue(value)} inputValue={filterValue} labelText="Filtrar pelo número da requisição" />
             <TableContainer component={Paper} sx={{ backgroundColor: '#FFF' }}>
                 <Table>

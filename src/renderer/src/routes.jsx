@@ -7,6 +7,7 @@ import Edition from "./pages/Edition";
 import EditionRequests from "./pages/EditionRequests";
 import EditionLoanBatteries from "./pages/EditionLoanBatteries";
 import RequestOutput from "./pages/RequestOutput";
+import PermutedRequestOutput from "./pages/RequestOutput/PermutedRequestOutput";
 
 
 export default function Router() {
@@ -16,6 +17,7 @@ export default function Router() {
                 <Route path="/" element={<DefaultPage />}>
                     <Route index element={<Home />} />
                     <Route path="/saida" element={<RequestOutput />} />
+                    <Route path="/saida/requisicao-permutada" element={<PermutedRequestOutput />} />
                     <Route path="/retorno" element={<ReturnToCustomers />} />
                     <Route path="/baterias-de-emprestimo" element={<LoanBatteries />} />
                     <Route path="/editar" element={<Edition />} />
