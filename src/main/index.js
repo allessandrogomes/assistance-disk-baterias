@@ -73,7 +73,7 @@ function createWindow() {
     width: 900,
     height: 670,
     show: false,
-    icon: path.join(__dirname, '../../resources/icon.ico').replace("app.asar", "app.asar.unpacked"),
+    icon: iconApp,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { iconApp } : {}),
     webPreferences: {
