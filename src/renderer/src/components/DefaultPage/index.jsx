@@ -55,9 +55,11 @@ export default function DefaultPage() {
         let requestsClone = requests.map(request => ({ ...request }))
 
         requestsClone.forEach(request => {
-            request.numberOfDaysPassed = definesNumberOfDaysPassed(request.entryDate)
-            request.deadlineDays = setsTheDeadlineDays(request.entryDate, request.returnDate)
-            request.daysOfDelay = defineDaysOfDelay(request.numberOfDaysPassed, request.deadlineDays)
+            if (request.status !== 'FINALIZADA') {
+                request.numberOfDaysPassed = definesNumberOfDaysPassed(request.entryDate)
+                request.deadlineDays = setsTheDeadlineDays(request.entryDate, request.returnDate)
+                request.daysOfDelay = defineDaysOfDelay(request.numberOfDaysPassed, request.deadlineDays)
+            }
         })
 
         return requestsClone
