@@ -1,10 +1,10 @@
 {
   "name": "stockflow-manager",
   "version": "1.0.0",
-  "description": "Gerenciador de estoque de baterias",
+  "description": "O StockFlow Manager é um software robusto para gerenciar baterias em garantia no estoque. Automatiza o controle de tempo dos produtos, oferecendo uma solução prática e eficiente para organização e gestão de garantias. Ideal para otimizar operações e melhorar a satisfação do cliente.",
   "main": "./out/main/index.js",
   "author": "Alessandro da Silva Gomes",
-  "homepage": "https://allessandrogomes-portfolio.vercel.app/",
+  "homepage": "https://github.com/allessandrogomes",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
@@ -28,7 +28,6 @@
     "@mui/material": "^5.15.14",
     "@mui/x-data-grid": "^7.0.0-beta.7",
     "@reduxjs/toolkit": "^2.2.3",
-    "date-fns": "^3.6.0",
     "electron-updater": "^6.1.7",
     "formik": "^2.4.5",
     "fs-extra": "^11.2.0",
@@ -37,7 +36,6 @@
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
     "redux": "^5.0.1",
-    "styled-components": "^6.1.8",
     "uuid": "^9.0.1",
     "yup": "^1.4.0"
   },
