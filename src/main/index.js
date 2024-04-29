@@ -12,12 +12,17 @@ const stockflowManagerPath = `${documentsPath}\\stockflow-manager`
 const Anystack = new (require('@anystack/electron-license'))(
   {
     api: {
-      key: 'TtKK5I4aeQBrRbWLsObnLHrJM1DTJNk6',
-      productId: '9be35305-dbf2-4806-9f5f-80017ae2b3e9',
+      key: 'z3E5DF0vCfgBsAsdaWtOrK8Ofl6ftZUP',
+      productId: '9be327bd-4508-49fe-8e0b-59f999fda48e',
     },
     license: {
       requireEmail: false,
       encryptionKey: 'UNIQUE-KEY',
+      trial: {
+        enabled: true,
+        value: 7,
+        unit: 'days'
+      }
     },
     prompt: {
       title: 'StockFlow Manager',
