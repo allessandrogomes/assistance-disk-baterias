@@ -42,7 +42,3 @@ publish:
   url: https://example.com/auto-updates
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/
-extraResources:
-  - from: "./node_modules/@anystack/electron-license/license"
-    to: "license"
-    filter: "**/*"
