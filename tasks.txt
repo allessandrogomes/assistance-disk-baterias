@@ -1,3 +1,5 @@
+adicionar autocomplete no preenchimento da data
+adicionar verificação na bateria de empréstimo ao realizar entrada
 adicionar opção de adicionar mais de uma bateria em uma requisição sem precisar escrever todos os dados novamente
 refatoração de código
 refatoração de componentes
