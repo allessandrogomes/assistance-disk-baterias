@@ -1,12 +1,9 @@
-import { Box, Button, FormControl, Typography } from '@mui/material';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid'
-import { Formik } from 'formik';
 import * as Yup from 'yup';
-import TextFieldForm from '../TextFieldForm';
 import { updateData } from '../../store/reducers/requests';
 import { setsTheDeadlineDays } from '../../utils/setsTheDeadlineDays';
+import Form from '../Form';
 
 export default function FormAddRequest({ requestRegisteredSuccessfully }) {
 
@@ -14,14 +11,12 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
 
     const dispatch = useDispatch()
 
-    const [borrowedRouteBattery, setBorrowedRouteBattery] = useState(false)
-
     const checksForDuplicationOfRequest = (request) => {
         const duplicateRequest = requests.some(item => item.batteryCode === request.batteryCode && item.status !== 'FINALIZADA')
         return duplicateRequest
     }
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = (values) => {
         let requestsClone = requests.map(request => ({ ...request }))
 
         const formattedFormData = {
@@ -48,7 +43,7 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
                 formattedFormData.itHasALoanerBattery = true
 
                 const itIsAPendingRequestBattery = requestsClone.some(item => item.batteryCode === formattedFormData.loanBatteryCode && item.status === 'PENDENTE') ? true : false
-                
+
                 if (itIsAPendingRequestBattery) {
                     requestsClone.forEach(item => {
                         item.batteryCode === formattedFormData.loanBatteryCode ? item.status = 'EMPRESTADA' : ''
@@ -77,7 +72,7 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         loanedRouteBatteryRequestNumber: Yup.string().matches(/^[0-9]+$/, 'Digite apenas números')
     })
 
-    const initialValuesForm = {
+    const initialValues = {
         id: 0,
         request: '',
         clientName: '',
@@ -101,133 +96,86 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         itHasALoanerBattery: false
     }
 
-    return (
-        <Formik
-            initialValues={initialValuesForm}
-            validationSchema={schema}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-                setTimeout(() => {
-                    handleSubmit(values)
-                    resetForm()
-                    setSubmitting(false)
-                }, 200)
-            }}
-        >
+    const formFields = [
+        {
+            name: "request",
+            title: "Nº requisição",
+            type: "text"
+        },
+        {
+            name: "clientName",
+            title: "Nome cliente",
+            type: "text"
+        },
+        {
+            name: "cpf",
+            title: "CPF",
+            type: "text",
+            inputProps: { maxLength: 11 }
+        },
+        {
+            name: "phoneNumber",
+            title: "Telefone",
+            type: "text",
+            inputProps: { maxLength: 11 }
+        },
+        {
+            name: "entryDate",
+            title: "Data entrada",
+            type: "text"
+        },
+        {
+            name: "returnDate",
+            title: "Data retorno",
+            type: "text"
+        },
+        {
+            name: "batteryModel",
+            title: "Modelo bateria",
+            type: "text"
+        },
+        {
+            name: "batteryCode",
+            title: "Código bateria",
+            type: "text"
+        },
+        {
+            name: "loanBatteryModel",
+            title: "Bateria empréstimo",
+            type: "text"
+        },
+        {
+            name: "loanBatteryCode",
+            title: "Código empréstimo",
+            type: "text"
+        },
+        {
+            name: "loanedRouteBatteryRequestNumber",
+            title: "Nº requisição rota",
+            type: "text"
+        }
+    ]
 
-            {({
-                values,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting
-            }) => (
-                <form onSubmit={handleSubmit}>
-                    <Typography component="h2" variant="h6" textAlign="center">Adicionar nova requisição</Typography>
-                    <FormControl sx={{ borderRadius: '10px', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', bgcolor: '#EEEEEE', p: '20px 0', width: '500px' }}>
-                        <TextFieldForm
-                            name="request"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="Nº requisição"
-                            type="text"
-                            value={values.request}
-                        />
-                        <TextFieldForm
-                            name="clientName"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="Nome cliente"
-                            type="text"
-                            value={values.clientName}
-                        />
-                        <TextFieldForm
-                            inputProps={{maxLength: 11}}
-                            name="cpf"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="CPF"
-                            type="text"
-                            value={values.cpf}
-                        />
-                        <TextFieldForm
-                            inputProps={{maxLength: 11}}
-                            name="phoneNumber"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="Telefone"
-                            type="text"
-                            value={values.phoneNumber}
-                        />
-                        <TextFieldForm
-                            inputProps={{maxLength: 10}}
-                            name="entryDate"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            sx={{ width: '206px' }}
-                            title="Data entrada"
-                            type="text"
-                            value={values.entryDate}
-                        />
-                        <TextFieldForm
-                            inputProps={{maxLength: 10}}
-                            name="returnDate"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            sx={{ width: '206px' }}
-                            title="Data retorno"
-                            type="text"
-                            value={values.returnDate}
-                        />
-                        <TextFieldForm
-                            name="batteryModel"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="Modelo bateria"
-                            type="text"
-                            value={values.batteryModel}
-                        />
-                        <TextFieldForm
-                            name="batteryCode"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="Código bateria"
-                            type="text"
-                            value={values.batteryCode}
-                        />
-                        <TextFieldForm
-                            name="loanBatteryModel"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="Bateria empréstimo"
-                            type="text"
-                            value={values.loanBatteryModel}
-                        />
-                        <TextFieldForm
-                            name="loanBatteryCode"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            title="Código empréstimo"
-                            type="text"
-                            value={values.loanBatteryCode}
-                        />
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <input onChange={() => setBorrowedRouteBattery(!borrowedRouteBattery)} type='checkbox' />
-                            <Typography sx={{ color: '#000' }}>Bateria emprestada de rota</Typography>
-                            {borrowedRouteBattery &&
-                                <TextFieldForm
-                                    name="loanedRouteBatteryRequestNumber"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    title="Nº requisição rota"
-                                    type="text"
-                                    value={values.loanedRouteBatteryRequestNumber}
-                                />
-                            }
-                        </Box>
-                        <Button disabled={isSubmitting} type='submit' variant="contained">Adicionar</Button>
-                    </FormControl>
-                </form>
-            )}
-        </Formik>
+    const formStyle = {
+        borderRadius: "10px",
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "start",
+        gap: "10px",
+        bgcolor: "#EEEEEE",
+        p: "20px",
+        width: "422px"
+    }
+
+    return (
+        <Form
+            initialValues={initialValues}
+            schema={schema}
+            formTitle="Adicionar nova requisição"
+            formFields={formFields}
+            formStyle={formStyle}
+            formData={(values) => handleSubmit(values)}
+        />
     )
 }

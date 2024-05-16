@@ -27,7 +27,7 @@ const initialFilters = [
     }
 ]
 
-export default function DataTable() {
+export default function RequestTable() {
 
     const requests = useSelector(state => state.requests)
 

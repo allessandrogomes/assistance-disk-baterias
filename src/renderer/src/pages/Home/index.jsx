@@ -1,11 +1,9 @@
 import { Alert, Box } from "@mui/material"
 import FormAddRequest from "../../components/FormAddRequest"
-import DataTable from "../../components/Table"
 import { useEffect, useState } from "react"
+import RequestTable from "../../components/RequestTable"
 
-
-
-function Home() {
+export default function Home() {
 
   const [requestRegisteredSuccessfully, setRequestRegisteredSuccessfully] = useState(undefined)
 
@@ -19,8 +17,6 @@ function Home() {
 
   return (
     <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '50px', justifyContent: 'center' }}>
-      <FormAddRequest requestRegisteredSuccessfully={value => setRequestRegisteredSuccessfully(value)}
-      />
       {
         requestRegisteredSuccessfully === true ? (
           <Alert severity="success">Requisição cadastrada com sucesso.</Alert>
@@ -28,9 +24,8 @@ function Home() {
           <Alert severity="warning">Já existe uma bateria com esse código cadastrado, por favor tente novamente.</Alert>
         ) : null
       }
-      <DataTable />
+      <FormAddRequest requestRegisteredSuccessfully={value => setRequestRegisteredSuccessfully(value)} />
+      <RequestTable />
     </Box>
   )
 }
-
-export default Home
