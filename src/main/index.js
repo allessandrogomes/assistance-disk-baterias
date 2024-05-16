@@ -2,47 +2,12 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import iconApp from '../../resources/icon.svg?asset'
-import { autoUpdater } from 'electron-updater'
 const fs = require('fs-extra');
 const path = require('path');
 
 const documentsPath = `${process.env.USERPROFILE}\\Documents`
 const stockflowManagerPath = `${documentsPath}\\stockflow-manager`
  
-const Anystack = new (require('@anystack/electron-license'))(
-  {
-    api: {
-      key: 'z3E5DF0vCfgBsAsdaWtOrK8Ofl6ftZUP',
-      productId: '9be327bd-4508-49fe-8e0b-59f999fda48e',
-    },
-    license: {
-      requireEmail: false,
-      encryptionKey: 'UNIQUE-KEY',
-      trial: {
-        enabled: true,
-        value: 7,
-        unit: 'days'
-      }
-    },
-    prompt: {
-      title: 'StockFlow Manager',
-      subtitle: "Ative sua licença para iniciar",
-      logo: iconApp,
-      licenseKey: "Chave de licença",
-      activateLicense: "Ativar licença",
-      errors: {
-        NOT_FOUND: "Chave inválida.",
-        EXPIRED: "Sua licença expirou."
-      }
-    },
-    confirmation: {
-      title: "Licença ativada com sucesso!",
-      subtitle: "Obrigado por ativar a licença do seu produto."
-    }
-  },
-  autoUpdater
-);
-
 // Cria os arquivos que irão armazenar os dados, caso não existam
 function createFoldersAndDataFiles() {
   const dataFolderPath = path.join(stockflowManagerPath, 'data')
@@ -80,14 +45,16 @@ function createWindow() {
     show: false,
     icon: iconApp,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { iconApp } : {}),
+    ...(process.platform === 'linux' ? { iconApp } : { iconApp }),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
   })
 
-  Anystack.ifAuthorized(mainWindow)
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show()
+  })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
