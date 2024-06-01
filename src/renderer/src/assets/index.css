@@ -1,8 +1,18 @@
+@font-face {
+    font-family: 'Bebas-Neue';
+    src: url('./Bebas_Neue/BebasNeue-Regular.ttf');
+}
+
 body {
-    background-color: #222831;
-    color: #EEEEEE;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: 'Bebas-Neue';
 }
 
 .MuiDataGrid-withBorderColor {
     color: #000
+}
+
+.MuiTableCell-root.MuiTableCell-body, .MuiTableCell-root.MuiTableCell-head {
+    border-bottom: 1px solid #000;
 }

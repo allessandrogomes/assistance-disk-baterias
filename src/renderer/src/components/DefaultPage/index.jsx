@@ -4,9 +4,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import 'normalize.css'
 import '../../assets/index.css'
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Title from "../../components/Title";
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoanBatteries } from '../../store/reducers/loanBatteries';
@@ -18,11 +18,18 @@ import Footer from '../Footer';
 import { setsTheDeadlineDays } from '../../utils/setsTheDeadlineDays';
 import { definesNumberOfDaysPassed } from '../../utils/definesNumberOfDaysPassed';
 import { defineDaysOfDelay } from '../../utils/defineDaysOfDelay';
+import AddIcon from '@mui/icons-material/Add';
+import OutputIcon from '@mui/icons-material/Output';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import EditIcon from '@mui/icons-material/Edit';
+import ButtonMenu from './ButtonMenu';
 
 export default function DefaultPage() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
     const loanBatteries = useSelector(state => state.loanBatteries)
     const requests = useSelector(state => state.requests)
 
@@ -134,19 +141,20 @@ export default function DefaultPage() {
         }, 1000)
 
         updateSystem()
+        console.log(location.pathname)
     }
 
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', minHeight: '100vh' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', minHeight: '100vh', width: "100%" }}>
             <Title />
-            <Box sx={{ backgroundColor: '#31363F', display: 'flex', gap: '20px', p: '15px' }}>
-                <Button sx={{ backgroundColor: '#FF9800', color: '#000' }} onClick={() => navigate('/')} variant='contained'>Entrada</Button>
-                <Button sx={{ backgroundColor: '#90D26D', color: '#000' }} onClick={() => navigate('/saida')} variant='contained'>Saída</Button>
-                <Button sx={{ backgroundColor: '#41C9E2', color: '#000' }} onClick={() => navigate('/baterias-de-emprestimo')} variant='contained'>Baterias de empréstimo</Button>
-                <Button sx={{ backgroundColor: '#5755FE', color: '#000' }} onClick={() => navigate('/retorno')} variant='contained'>Retorno</Button>
-                <Button sx={{ backgroundColor: '#FF204E', color: '#000' }} onClick={() => navigate('/editar')} variant='contained'>Editar dados</Button>
-            </Box>
+            <ButtonGroup>
+                <ButtonMenu active={location.pathname === "/" ? true : false} text="Entrada" startIcon={<AddIcon />} onClick={() => navigate('/')}/>
+                <ButtonMenu active={location.pathname === "/saida" ? true : false} text="Saída" startIcon={<OutputIcon />} onClick={() => navigate('/saida')}/>
+                <ButtonMenu active={location.pathname === "/baterias-de-emprestimo" ? true : false} text="Baterias de empréstimo" startIcon={<InventoryIcon />} onClick={() => navigate('/baterias-de-emprestimo')}/>
+                <ButtonMenu active={location.pathname === "/retorno" ? true : false} text="Retorno" startIcon={<WhatsAppIcon />} onClick={() => navigate('/retorno')}/>
+                <ButtonMenu active={location.pathname === "/editar" ? true : false} text="Editar dados" startIcon={<EditIcon />} onClick={() => navigate('/editar')}/>
+            </ButtonGroup>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Hoje é {date.toLocaleDateString()}</Typography>
                 {isLoading ? (

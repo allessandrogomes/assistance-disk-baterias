@@ -89,7 +89,7 @@ export default function EditionRequests() {
             </Box>
             {requestNotFound ? <span style={{ color: 'white', fontFamily: 'sans-serif' }}>Nenhuma requisição encontrada...</span> :
                 selectedRequests.length > 0 ? (
-                    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'white', p: '10px' }}>
+                    <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: '#FFF', p: '10px' }}>
                         <Typography sx={{ color: 'red' }}>Existe mais de uma requisição, escolha uma para editar ou excluir</Typography>
                         <Table>
                             <TableHead>
@@ -131,7 +131,7 @@ export default function EditionRequests() {
                 ) :
                     (
                         Object.keys(selectedRequest).length !== 0 ? (
-                            <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: 'white', }}>
+                            <TableContainer component={Paper} sx={{ width: '100%', backgroundColor: '#FFF', }}>
                                 <Table>
                                     <TableHead>
                                         <TableRow>

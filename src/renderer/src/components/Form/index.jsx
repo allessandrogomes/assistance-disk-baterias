@@ -10,10 +10,11 @@ export default function Form({ initialValues, schema, formTitle, formFields, for
             validationSchema={schema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 setTimeout(() => {
+                    console.log(values.name)
                     formData(values)
                     resetForm()
                     setSubmitting(false)
-                }, 100)
+                }, 2000)
             }}
         >
 
@@ -34,12 +35,12 @@ export default function Form({ initialValues, schema, formTitle, formFields, for
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 title={item.title}
+                                value={values[item.name] || ''}
                                 type={item.type}
-                                values={values.name}
                                 inputProps={item.inputProps}
                             />
                         ))}
-                        <Button disabled={isSubmitting} type='submit' variant="contained">Adicionar</Button>
+                        <Button sx={{ position: "relative", left: "150px", mt: "10px", backgroundColor: "#000", '&:hover': { backgroundColor: "#2A2D38" } }} disabled={isSubmitting} type='submit' variant="contained">Adicionar</Button>
                     </FormControl>
                 </form>
             )}

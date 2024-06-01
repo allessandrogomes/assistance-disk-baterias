@@ -45,7 +45,7 @@ export default function ReturnToCustomers() {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
             <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>Retorno aos clientes</Typography>
-            <TableContainer sx={{ width: "95vw" }} component={Paper}>
+            <TableContainer sx={{ width: "95vw", backgroundColor: "#FBB900" }} component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -72,7 +72,7 @@ export default function ReturnToCustomers() {
                             <TableCell>{request.daysOfDelay}</TableCell>
                             <TableCell>{request.numberOfTimesReturned}</TableCell>
                             <TableCell>{request.lastReturnDate}</TableCell>
-                            <TableCell><Button onClick={() => sendMessageToCustomer(request)}><WhatsAppIcon sx={{ color: '#25D366' }}/></Button></TableCell>
+                            <TableCell><Button sx={{ backgroundColor: "#FFF", '&:hover': { backgroundColor: "#000" } }} onClick={() => sendMessageToCustomer(request)}><WhatsAppIcon sx={{ color: '#25D366' }}/></Button></TableCell>
                         </TableRow> : '')}
                     </TableBody>
                 </Table>

@@ -70,7 +70,7 @@ export default function OutputRequestTable({ data }) {
 
     return (
         <>
-            <TableContainer component={Paper} sx={{ backgroundColor: '#FFF' }}>
+            <TableContainer component={Paper} sx={{ backgroundColor: '#FBB900' }}>
                 <Table>
                     <TableHead>
                         <TableRow>

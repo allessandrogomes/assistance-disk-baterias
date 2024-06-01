@@ -42,7 +42,7 @@ export default function TableOfUnavailableBatteries() {
     return (
         <>
             <Typography variant="h5">Baterias emprestadas</Typography>
-            <TableContainer component={Paper}>
+            <TableContainer sx={{ backgroundColor: "#FBB900" }} component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>

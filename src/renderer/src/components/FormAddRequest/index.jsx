@@ -148,12 +148,8 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
             name: "loanBatteryCode",
             title: "Código empréstimo",
             type: "text"
-        },
-        {
-            name: "loanedRouteBatteryRequestNumber",
-            title: "Nº requisição rota",
-            type: "text"
         }
+
     ]
 
     const formStyle = {
@@ -163,9 +159,10 @@ export default function FormAddRequest({ requestRegisteredSuccessfully }) {
         flexWrap: "wrap",
         justifyContent: "start",
         gap: "10px",
-        bgcolor: "#EEEEEE",
+        bgcolor: "#FBB900",
         p: "20px",
-        width: "422px"
+        width: "422px",
+        position: "relative"
     }
 
     return (

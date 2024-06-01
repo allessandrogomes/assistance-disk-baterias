@@ -2,7 +2,7 @@ import { Box, TextField, Typography } from '@mui/material'
 import { ErrorMessage } from 'formik'
 
 
-export default function TextFieldForm({ onChange, onBlur, title, value, type, name, sx, inputProps }) {
+export default function TextFieldForm({ onChange, onBlur, title, value, type, name, inputProps }) {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <TextField
@@ -14,12 +14,12 @@ export default function TextFieldForm({ onChange, onBlur, title, value, type, na
                 label={title}
                 value={value}
                 variant="filled"
-                sx={sx}
+                sx={{ backgroundColor: "#FFFFFF" }}
                 inputProps={inputProps}
             />
             <ErrorMessage name={name}>
                 {message => (
-                    <Typography fontSize="small" color="red">{message}</Typography>
+                    <Typography fontWeight="bold" fontSize="small" color="black">{message}</Typography>
                 )}
             </ErrorMessage>
         </Box>

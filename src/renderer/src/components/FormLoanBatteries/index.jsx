@@ -42,10 +42,10 @@ export default function FormLoanBatteries({ newLoanBatteryRegisteredSucessfully 
 
     return (
         <form onSubmit={handleSubmit}>
-            <Box sx={{ backgroundColor: '#EEEEEE', borderRadius: '10px', display: 'flex', gap: '20px', p: '10px' }}>
-                <TextField label="Modelo da bateria" onChange={updateFormData} name="batteryModel" value={formData.batteryModel} variant="outlined" required />
-                <TextField label="Código da bateria" onChange={updateFormData} name="batteryCode" value={formData.batteryCode} variant="outlined" required />
-                <Button variant="contained" type="submit">Adicionar nova bateria</Button>
+            <Box sx={{ backgroundColor: '#FBB900', borderRadius: '10px', display: 'flex', gap: '20px', p: '10px' }}>
+                <TextField sx={{ backgroundColor: "#FFF" }} label="Modelo da bateria" onChange={updateFormData} name="batteryModel" value={formData.batteryModel} variant="outlined" required />
+                <TextField sx={{ backgroundColor: "#FFF" }} label="Código da bateria" onChange={updateFormData} name="batteryCode" value={formData.batteryCode} variant="outlined" required />
+                <Button sx={{ backgroundColor: "#000", '&:hover': { backgroundColor: "#2A2D38" } }} variant="contained" type="submit">Adicionar nova bateria</Button>
             </Box>
         </form>
     )
