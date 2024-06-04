@@ -20,7 +20,7 @@ no retorno, como também gerenciar todas as baterias de requisições e de empr�
 Mais adiante irá conhecer todas as funcionalidades e como o sistema irá auxiliar a equipe
 técnica da empresa na prática.
 
-![Static Badge](https://img.shields.io/badge/version-v1.0.2-green)
+![Static Badge](https://img.shields.io/badge/version-v1.0.0-green)
 ![Static Badge](https://img.shields.io/badge/license-restricted-blue)
 ![Static Badge](https://img.shields.io/badge/react_v18.2.0-5ED3F3)
 ![Static Badge](https://img.shields.io/badge/electron_v28.2.0-2A2D38)
