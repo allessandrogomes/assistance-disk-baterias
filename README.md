@@ -1,4 +1,4 @@
-# 📦 StockFlow Manager
+# 📦 StockFlow Manager - Versão para a empresa Disk Baterias
 
 StockFlow Manager é um sistema desktop que busca solucionar um problema e aperfeiçoar um dos processos de garantia dos
 produtos Moura. Este processo trata-se do gerenciamento, organização e retorno ao cliente
@@ -20,7 +20,7 @@ no retorno, como também gerenciar todas as baterias de requisições e de empr�
 Mais adiante irá conhecer todas as funcionalidades e como o sistema irá auxiliar a equipe
 técnica da empresa na prática.
 
-![Static Badge](https://img.shields.io/badge/version-v1.0.0-green)
+![Static Badge](https://img.shields.io/badge/version-v1.0.2-green)
 ![Static Badge](https://img.shields.io/badge/license-restricted-blue)
 ![Static Badge](https://img.shields.io/badge/react_v18.2.0-5ED3F3)
 ![Static Badge](https://img.shields.io/badge/electron_v28.2.0-2A2D38)
@@ -164,15 +164,15 @@ auxiliam o usuário.
 # ⚖️ Licenciamento e Uso da Aplicação
 
 Software: StockFlow Manager  
-Licenciado para: Bonfim Baterias LTDA.  
-Licenciador: Alessandro da Silva Gomes  
-CNPJ: 16.392.367/0001-38  
-Validade da Licença: Indeterminada  
+Licenciado para: 
+- Bonfim Baterias LTDA 16.392.367/0001-38;
+- JUAN AUGUSTO COMERCIO DE PECAS PARA VEICULOS LTDA 45.236.500/0001-65
+Licenciador: Alessandro da Silva Gomes
+Validade da Licença: Indeterminada
 
 **Descrição da Licença**  
-O uso do software StockFlow Manager é exclusivamente autorizado para a empresa Bonfim
-Baterias LTDA., sob o CNPJ fornecido. Esta licença é válida por tempo indeterminado, a
-menos que seja revogada ou alterada pelo licenciador.  
+O uso do software StockFlow Manager é exclusivamente autorizado para as empresas informadas, sob os CNPJs fornecidos. Esta licença é válida por tempo indeterminado, a
+menos que seja revogada ou alterada pelo licenciador.
 
 **Distribuição da Chave de Licença**  
 A chave de licença, essencial para a ativação e uso contínuo do software, será fornecida e
@@ -182,8 +182,7 @@ desenvolvedor.
 
 **Restrições de Uso**  
 O uso do software fora dos termos estabelecidos nesta licença, incluindo mas não se
-limitando à reprodução, redistribuição ou uso em outra entidade que não a Bonfim Baterias
-LTDA., é estritamente proibido e sujeito a medidas legais.  
+limitando à reprodução, redistribuição ou uso em outra entidade que não as empresas autorizadas, é estritamente proibido e sujeito a medidas legais.
 
 **Consequências do Uso Não Autorizado**  
 Qualquer uso não autorizado do software será considerado uma violação dos direitos de
@@ -198,6 +197,7 @@ software ou na política de uso.
 # 🤖 Tecnologias utilizadas
 
 - React
+- NodeJs
 - Electron
 - Vite
 - JavaScript
@@ -209,7 +209,6 @@ software ou na política de uso.
 - lodash
 - FileSystem
 - MUI
-- AnyStack
 
 # ✍️ Autor
 
