@@ -1,7 +1,7 @@
 {
-  "name": "stockflow-manager",
+  "name": "assistance-disk-baterias",
   "version": "1.0.0",
-  "description": "O StockFlow Manager é um software robusto para gerenciar baterias em garantia no estoque. Automatiza o controle de tempo dos produtos, oferecendo uma solução prática e eficiente para organização e gestão de garantias. Ideal para otimizar operações e melhorar a satisfação do cliente.",
+  "description": "O AT - Disk Baterias é um software robusto para gerenciar baterias em garantia no estoque. Automatiza o controle de tempo dos produtos, oferecendo uma solução prática e eficiente para organização e gestão de garantias. Ideal para otimizar operações e melhorar a satisfação do cliente.",
   "main": "./out/main/index.js",
   "author": "Alessandro da Silva Gomes",
   "homepage": "https://github.com/allessandrogomes",
@@ -18,7 +18,6 @@
     "build:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
-    "@anystack/electron-license": "^0.0.15",
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
     "@emotion/react": "^11.11.4",
