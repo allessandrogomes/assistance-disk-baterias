@@ -1,7 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import iconApp from '../../resources/icon.svg?asset'
+import icon from '../../build/logo.ico?asset'
 const fs = require('fs-extra');
 const path = require('path');
 
@@ -40,12 +40,14 @@ function createWindow() {
   createFoldersAndDataFiles()
 
   const mainWindow = new BrowserWindow({
-    width: 900,
+    width: 1100,
+    minWidth: 900,
     height: 670,
+    minHeight: 670,
     show: false,
-    icon: iconApp,
+    icon: icon,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { iconApp } : { iconApp }),
+    ...(process.platform === 'linux' ? { icon } : { icon }),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
