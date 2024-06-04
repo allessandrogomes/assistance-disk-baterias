@@ -21,8 +21,8 @@ export default function ReturnToCustomers() {
 
     const sendMessageToCustomer = (request) => {
 
-        const defaultMessage = `Olá ${request.clientName}, a Assistência Técnica Moura informa que o seu diagnóstico já está pronto para retirada, solicitamos que o(a) senhor(a) retorne ao depósito para finalização do processo de garantia, estamos no aguardo. Lembre-se, outros consumidores também precisarão de uma bateria de empréstimo para realização do processo de garantia. Agradecemos a compreensão.`
-        const messageWithoutLoanBattery = `Olá ${request.clientName}, a Assistência Técnica Moura informa que o seu diagnóstico já está pronto para retirada, solicitamos que o(a) senhor(a) retorne ao depósito para finalização do processo de garantia, estamos no aguardo.`
+        const defaultMessage = `Olá ${request.clientName}, a Assistência Técnica Disk Baterias informa que o seu diagnóstico já está pronto para retirada, solicitamos que o(a) senhor(a) retorne à nossa loja para finalização do processo de assistência, estamos no aguardo. Lembre-se, outros consumidores também precisarão de uma bateria de empréstimo para realização do processo. Agradecemos a compreensão. *Caso o atraso ultrapasse os 30 dias, será realizada a permuta (troca) entre as baterias, ou seja, a Disk Baterias será proprietária da bateria deixada, e a bateria emprestada será de propriedade do cliente*.`
+        const messageWithoutLoanBattery = `Olá ${request.clientName}, a Assistência Técnica Disk Baterias informa que o seu diagnóstico já está pronto para retirada, solicitamos que o(a) senhor(a) retorne à loja para finalização do processo de assistência, estamos no aguardo.`
         let message = defaultMessage
 
         request.loanBatteryCode.length === 0 ? message = messageWithoutLoanBattery : ''
