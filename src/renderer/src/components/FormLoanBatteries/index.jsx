@@ -37,6 +37,12 @@ export default function FormLoanBatteries({ newLoanBatteryRegisteredSucessfully 
             loanBatteriesUpdated.push(formData)
             dispatch(updateLoanBatteries(loanBatteriesUpdated))
             window.bridgeLoanBatteries.saveDataLoanBatteries(loanBatteriesUpdated)
+            setFormData({
+                batteryModel: '',
+                batteryCode: '',
+                batteryIsAvailable: true,
+                origin: 'SOS'
+            })
         }
     }
 
