@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: stockflow-manager
+productName: assistance-disk-baterias
 directories:
   buildResources: builds
 files:
@@ -11,7 +11,8 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: stockflow-manager
+  executableName: assistance-disk-baterias
+  icon: build/logo.ico
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
