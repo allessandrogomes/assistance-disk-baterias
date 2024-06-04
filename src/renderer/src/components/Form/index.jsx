@@ -14,7 +14,7 @@ export default function Form({ initialValues, schema, formTitle, formFields, for
                     formData(values)
                     resetForm()
                     setSubmitting(false)
-                }, 2000)
+                }, 500)
             }}
         >
 
